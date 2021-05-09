@@ -1,10 +1,10 @@
 // using Microsoft.EntityFrameworkCore;
 
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using TeamMonitoring.LocationService.API.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using TeamMonitoring.LocationService.API.Models;
 
 namespace TeamMonitoring.LocationService.API.Persistence
 {

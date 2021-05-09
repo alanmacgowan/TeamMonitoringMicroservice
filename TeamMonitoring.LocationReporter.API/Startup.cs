@@ -1,16 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TeamMonitoring.LocationReporter.API.Events;
+using TeamMonitoring.LocationReporter.API.Models;
+using TeamMonitoring.LocationReporter.API.Services;
 
 namespace TeamMonitoring.LocationReporter.API
 {
@@ -32,6 +28,14 @@ namespace TeamMonitoring.LocationReporter.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TeamMonitoring.LocationReporter.API", Version = "v1" });
             });
+
+
+            services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));
+            services.Configure<TeamServiceOptions>(Configuration.GetSection("teamservice"));
+
+            services.AddSingleton(typeof(IEventEmitter), typeof(AMQPEventEmitter));
+            services.AddSingleton(typeof(ICommandEventConverter), typeof(CommandEventConverter));
+            services.AddSingleton(typeof(ITeamServiceClient), typeof(HttpTeamServiceClient));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

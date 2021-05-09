@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
 
-namespace TeamMonitoring.LocationService.API.Models {
+namespace TeamMonitoring.LocationService.API.Models
+{
 
-    public interface ILocationRecordRepository {
-        LocationRecord Add(LocationRecord locationRecord);    
+    public interface ILocationRecordRepository
+    {
+        LocationRecord Add(LocationRecord locationRecord);
         LocationRecord Update(LocationRecord locationRecord);
         LocationRecord Get(Guid memberId, Guid recordId);
         LocationRecord Delete(Guid memberId, Guid recordId);
-       
+
         LocationRecord GetLatestForMember(Guid memberId);
-        
+
         ICollection<LocationRecord> AllForMember(Guid memberId);
     }
 }

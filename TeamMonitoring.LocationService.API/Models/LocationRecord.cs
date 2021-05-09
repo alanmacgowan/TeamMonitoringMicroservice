@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace TeamMonitoring.LocationService.API.Models {
+namespace TeamMonitoring.LocationService.API.Models
+{
 
-    public class LocationRecord {
+    public class LocationRecord
+    {
         public Guid ID { get; set; }
         public float Latitude { get; set; }
         public float Longitude { get; set; }

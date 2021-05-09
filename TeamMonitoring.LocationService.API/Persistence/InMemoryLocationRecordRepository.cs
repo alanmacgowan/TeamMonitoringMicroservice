@@ -1,20 +1,23 @@
 using System;
 using System.Collections.Generic;
-using TeamMonitoring.LocationService.API.Models;
 using System.Linq;
+using TeamMonitoring.LocationService.API.Models;
 
-namespace TeamMonitoring.LocationService.API.Persistence {
+namespace TeamMonitoring.LocationService.API.Persistence
+{
 
     public class InMemoryLocationRecordRepository : ILocationRecordRepository
     {
         private static Dictionary<Guid, SortedList<long, LocationRecord>> locationRecords;
 
-        public InMemoryLocationRecordRepository() {
-            if (locationRecords == null) {
+        public InMemoryLocationRecordRepository()
+        {
+            if (locationRecords == null)
+            {
                 locationRecords = new Dictionary<Guid, SortedList<long, LocationRecord>>();
             }
         }
-        
+
         public LocationRecord Add(LocationRecord locationRecord)
         {
             var memberRecords = getMemberRecords(locationRecord.MemberID);
@@ -26,15 +29,16 @@ namespace TeamMonitoring.LocationService.API.Persistence {
         public ICollection<LocationRecord> AllForMember(Guid memberId)
         {
             var memberRecords = getMemberRecords(memberId);
-            return memberRecords.Values.Where( l => l.MemberID == memberId).ToList();
+            return memberRecords.Values.Where(l => l.MemberID == memberId).ToList();
         }
 
         public LocationRecord Delete(Guid memberId, Guid recordId)
         {
             var memberRecords = getMemberRecords(memberId);
-            LocationRecord lr = memberRecords.Values.Where( l => l.ID == recordId).FirstOrDefault();
-            
-            if (lr != null) {
+            LocationRecord lr = memberRecords.Values.Where(l => l.ID == recordId).FirstOrDefault();
+
+            if (lr != null)
+            {
                 memberRecords.Remove(lr.Timestamp);
             }
 
@@ -45,7 +49,7 @@ namespace TeamMonitoring.LocationService.API.Persistence {
         {
             var memberRecords = getMemberRecords(memberId);
 
-            LocationRecord lr = memberRecords.Values.Where( l => l.ID == recordId).FirstOrDefault();
+            LocationRecord lr = memberRecords.Values.Where(l => l.ID == recordId).FirstOrDefault();
             return lr;
         }
 
@@ -54,15 +58,18 @@ namespace TeamMonitoring.LocationService.API.Persistence {
             return Delete(locationRecord.MemberID, locationRecord.ID);
         }
 
-        public LocationRecord GetLatestForMember(Guid memberId) {
+        public LocationRecord GetLatestForMember(Guid memberId)
+        {
             var memberRecords = getMemberRecords(memberId);
 
             LocationRecord lr = memberRecords.Values.LastOrDefault();
             return lr;
         }
 
-        private SortedList<long, LocationRecord> getMemberRecords(Guid memberId) {
-            if (!locationRecords.ContainsKey(memberId)) {
+        private SortedList<long, LocationRecord> getMemberRecords(Guid memberId)
+        {
+            if (!locationRecords.ContainsKey(memberId))
+            {
                 locationRecords.Add(memberId, new SortedList<long, LocationRecord>());
             }
 
