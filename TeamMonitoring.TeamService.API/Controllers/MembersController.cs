@@ -17,6 +17,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
         }
 
         [HttpGet]
+        [Route("/teams/{teamID}/[controller]/members")]
         public virtual IActionResult GetMembers(Guid teamID)
         {
             Team team = repository.Get(teamID);
@@ -33,7 +34,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
 
 
         [HttpGet]
-        [Route("/teams/{teamId}/[controller]/{memberId}")]
+        [Route("/teams/{teamID}/[controller]/{memberId}")]
         public virtual IActionResult GetMember(Guid teamID, Guid memberId)
         {
             Team team = repository.Get(teamID);
@@ -58,7 +59,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
         }
 
         [HttpPut]
-        [Route("/teams/{teamId}/[controller]/{memberId}")]
+        [Route("/teams/{teamID}/[controller]/{memberId}")]
         public virtual IActionResult UpdateMember([FromBody] Member updatedMember, Guid teamID, Guid memberId)
         {
             Team team = repository.Get(teamID);

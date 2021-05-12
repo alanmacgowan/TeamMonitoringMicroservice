@@ -24,22 +24,8 @@ namespace TeamMonitoring.LocationService.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-
-            var transient = true;
-            if (Configuration.GetSection("transient") != null)
-            {
-                transient = Boolean.Parse(Configuration.GetSection("transient").Value);
-            }
-            if (transient)
-            {
-                services.AddScoped<ILocationRecordRepository, InMemoryLocationRecordRepository>();
-            }
-            else
-            {
-                var connectionString = Configuration.GetSection("postgres:cstr").Value;
-                services.AddDbContext<LocationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-                services.AddScoped<ILocationRecordRepository, LocationRecordRepository>();
-            }
+            services.AddDbContext<LocationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<ILocationRecordRepository, LocationRecordRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
