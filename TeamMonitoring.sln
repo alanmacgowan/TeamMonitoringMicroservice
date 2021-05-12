@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.LocationServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.LocationReporter.API", "TeamMonitoring.LocationReporter.API\TeamMonitoring.LocationReporter.API.csproj", "{649BD961-9088-4481-AAE0-1C6A1DF2A6B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.EventProcessor", "TeamMonitoring.EventProcessor\TeamMonitoring.EventProcessor.csproj", "{3C15DC23-F493-404D-B91E-68EB6FC63B50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.EventProcessor", "TeamMonitoring.EventProcessor\TeamMonitoring.EventProcessor.csproj", "{09BAA10C-DF20-45CE-97D5-62FE9F65B504}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{649BD961-9088-4481-AAE0-1C6A1DF2A6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{649BD961-9088-4481-AAE0-1C6A1DF2A6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{649BD961-9088-4481-AAE0-1C6A1DF2A6B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C15DC23-F493-404D-B91E-68EB6FC63B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C15DC23-F493-404D-B91E-68EB6FC63B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C15DC23-F493-404D-B91E-68EB6FC63B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C15DC23-F493-404D-B91E-68EB6FC63B50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09BAA10C-DF20-45CE-97D5-62FE9F65B504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09BAA10C-DF20-45CE-97D5-62FE9F65B504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09BAA10C-DF20-45CE-97D5-62FE9F65B504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09BAA10C-DF20-45CE-97D5-62FE9F65B504}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
