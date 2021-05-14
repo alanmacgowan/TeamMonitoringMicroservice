@@ -40,7 +40,7 @@ namespace TeamMonitoring.TeamService.API.Persistence
 
         public IEnumerable<Team> List()
         {
-            return this.context.Teams.ToList();
+            return this.context.Teams.Include(x => x.Members).ToList();
         }
 
         public Team Update(Team team)

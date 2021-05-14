@@ -12,10 +12,10 @@ namespace TeamMonitoring.EventProcessor.Events
     public class MemberLocationEventProcessor : BackgroundService, IEventProcessor
     {
         private ILogger _logger;
-        private IEventSubscriber subscriber;
-        private IEventEmitter eventEmitter;
-        private ProximityDetector proximityDetector;
-        private ILocationCache locationCache;
+        private IEventSubscriber _subscriber;
+        private IEventEmitter _eventEmitter;
+        private ProximityDetector _proximityDetector;
+        private ILocationCache _locationCache;
 
         public MemberLocationEventProcessor(
             ILogger<MemberLocationEventProcessor> logger,
@@ -25,23 +25,23 @@ namespace TeamMonitoring.EventProcessor.Events
         )
         {
             _logger = logger;
-            this.subscriber = eventSubscriber;
-            this.eventEmitter = eventEmitter;
-            this.proximityDetector = new ProximityDetector();
-            this.locationCache = locationCache;
+            _subscriber = eventSubscriber;
+            _eventEmitter = eventEmitter;
+            _proximityDetector = new ProximityDetector();
+            _locationCache = locationCache;
 
-            this.subscriber.MemberLocationRecordedEventReceived += (mlre) =>
+            _subscriber.MemberLocationRecordedEventReceived += (mlre) =>
             {
                 _logger.LogInformation($"MemberLocationRecordedEvent Received: {mlre.MemberID}");
 
-                var memberLocations = locationCache.GetMemberLocations(mlre.TeamID);
-                ICollection<ProximityDetectedEvent> proximityEvents = proximityDetector.DetectProximityEvents(mlre, memberLocations, 30.0f);
+                var memberLocations = _locationCache.GetMemberLocations(mlre.TeamID);
+                ICollection<ProximityDetectedEvent> proximityEvents = _proximityDetector.DetectProximityEvents(mlre, memberLocations, 30.0f);
                 foreach (var proximityEvent in proximityEvents)
                 {
-                    eventEmitter.EmitProximityDetectedEvent(proximityEvent);
+                    _eventEmitter.EmitProximityDetectedEvent(proximityEvent);
                 }
 
-                locationCache.Put(mlre.TeamID, new MemberLocation
+                _locationCache.Put(mlre.TeamID, new MemberLocation
                 {
                     MemberID = mlre.MemberID,
                     Location = new GpsCoordinate
@@ -66,12 +66,12 @@ namespace TeamMonitoring.EventProcessor.Events
 
         public void Start()
         {
-            this.subscriber.Subscribe();
+            _subscriber.Subscribe();
         }
 
         public void Stop()
         {
-            this.subscriber.Unsubscribe();
+            _subscriber.Unsubscribe();
         }
     }
 }
