@@ -1,5 +1,5 @@
-using System;
 using Newtonsoft.Json;
+using System;
 using TeamMonitoring.ProximityMonitor.Location;
 
 namespace TeamMonitoring.ProximityMonitor.Events
@@ -14,7 +14,8 @@ namespace TeamMonitoring.ProximityMonitor.Events
         public double MemberDistance { get; set; }
         public Guid TeamID { get; set; }
 
-         public string toJson() {
+        public string toJson()
+        {
             return JsonConvert.SerializeObject(this);
         }
     }

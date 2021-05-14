@@ -8,7 +8,7 @@ namespace TeamMonitoring.ProximityMonitor.Queues
     {
         void Subscribe();
         void Unsubscribe();
-        
+
         event ProximityDetectedEventReceivedDelegate ProximityDetectedEventReceived;
     }
 }

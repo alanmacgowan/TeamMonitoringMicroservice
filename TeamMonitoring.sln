@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.EventProcess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.Monitor.UI", "TeamMonitoring.Monitor.UI\TeamMonitoring.Monitor.UI.csproj", "{B6379D23-41E2-41FC-9E95-7D64BB4CE16D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.ProximityMonitor", "TeamMonitoring.ProximityMonitor\TeamMonitoring.ProximityMonitor.csproj", "{5284E7D4-9929-4E93-A43D-2DAE31A4EFEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.ProximityMonitor", "TeamMonitoring.ProximityMonitor\TeamMonitoring.ProximityMonitor.csproj", "{5284E7D4-9929-4E93-A43D-2DAE31A4EFEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.RealityService.API", "TeamMonitoring.RealityService.API\TeamMonitoring.RealityService.API.csproj", "{3595D90A-52DD-42F3-9C7E-6308E52C3467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{5284E7D4-9929-4E93-A43D-2DAE31A4EFEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5284E7D4-9929-4E93-A43D-2DAE31A4EFEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5284E7D4-9929-4E93-A43D-2DAE31A4EFEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3595D90A-52DD-42F3-9C7E-6308E52C3467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3595D90A-52DD-42F3-9C7E-6308E52C3467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3595D90A-52DD-42F3-9C7E-6308E52C3467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3595D90A-52DD-42F3-9C7E-6308E52C3467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

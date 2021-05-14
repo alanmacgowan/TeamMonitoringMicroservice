@@ -1,5 +1,5 @@
-using System;
 using Newtonsoft.Json;
+using System;
 
 namespace TeamMonitoring.EventProcessor.Events
 {
@@ -13,11 +13,13 @@ namespace TeamMonitoring.EventProcessor.Events
         public Guid ReportID { get; set; }
         public Guid TeamID { get; set; }
 
-        public string toJson() {
+        public string toJson()
+        {
             return JsonConvert.SerializeObject(this);
         }
 
-        public static MemberLocationRecordedEvent FromJson(string jsonBody) {
+        public static MemberLocationRecordedEvent FromJson(string jsonBody)
+        {
             return JsonConvert.DeserializeObject<MemberLocationRecordedEvent>(jsonBody);
         }
     }

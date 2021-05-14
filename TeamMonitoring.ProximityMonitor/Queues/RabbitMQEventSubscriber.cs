@@ -1,10 +1,10 @@
-using System;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
+using System.Text;
 using TeamMonitoring.ProximityMonitor.Events;
 
 namespace TeamMonitoring.ProximityMonitor.Queues
@@ -16,9 +16,9 @@ namespace TeamMonitoring.ProximityMonitor.Queues
         private ConnectionFactory connectionFactory;
         protected AMQPOptions amqpOptions;
         private QueueOptions queueOptions;
-        private EventingBasicConsumer consumer;   
-        private IModel channel;   
-        private string consumerTag;  
+        private EventingBasicConsumer consumer;
+        private IModel channel;
+        private string consumerTag;
         private ILogger logger;
 
         public RabbitMQEventSubscriber(ILogger<RabbitMQEventSubscriber> logger,
@@ -50,19 +50,21 @@ namespace TeamMonitoring.ProximityMonitor.Queues
 
         private void Initialize()
         {
-             channel.QueueDeclare(
-                queue: queueOptions.ProximityDetectedEventQueueName,
-                durable: false,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null
-            );    
-            consumer.Received += (ch, ea) => {
+            channel.QueueDeclare(
+               queue: queueOptions.ProximityDetectedEventQueueName,
+               durable: false,
+               exclusive: false,
+               autoDelete: false,
+               arguments: null
+           );
+            consumer.Received += (ch, ea) =>
+            {
                 var body = ea.Body.ToArray();
                 var msg = Encoding.UTF8.GetString(body);
                 var evt = JsonConvert.DeserializeObject<ProximityDetectedEvent>(msg);
                 logger.LogInformation($"Received incoming event, {body.Length} bytes.");
-                if (ProximityDetectedEventReceived != null) {
+                if (ProximityDetectedEventReceived != null)
+                {
                     ProximityDetectedEventReceived(evt);
                 }
                 channel.BasicAck(ea.DeliveryTag, false);

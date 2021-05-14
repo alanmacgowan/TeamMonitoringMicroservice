@@ -1,10 +1,10 @@
-using System;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System;
+using System.Text;
 using TeamMonitoring.EventProcessor.Events;
 using TeamMonitoring.EventProcessor.Models;
 

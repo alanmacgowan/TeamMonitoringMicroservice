@@ -1,5 +1,3 @@
-using System;
-
 namespace TeamMonitoring.Monitor.UI.Models
 {
     public class ErrorViewModel

@@ -8,7 +8,7 @@ namespace TeamMonitoring.EventProcessor.Queues
     {
         void Subscribe();
         void Unsubscribe();
-        
+
         event MemberLocationRecordedEventReceivedDelegate MemberLocationRecordedEventReceived;
     }
 }

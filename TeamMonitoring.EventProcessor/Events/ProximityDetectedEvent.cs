@@ -1,5 +1,5 @@
-using System;
 using Newtonsoft.Json;
+using System;
 using TeamMonitoring.EventProcessor.Location;
 
 namespace TeamMonitoring.EventProcessor.Events
@@ -14,7 +14,8 @@ namespace TeamMonitoring.EventProcessor.Events
         public GpsCoordinate TargetMemberLocation { get; set; }
         public double MemberDistance { get; set; }
 
-         public string toJson() {
+        public string toJson()
+        {
             return JsonConvert.SerializeObject(this);
         }
     }

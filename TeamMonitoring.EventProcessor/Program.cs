@@ -1,9 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TeamMonitoring.EventProcessor.Events;
 using TeamMonitoring.EventProcessor.Location;
 using TeamMonitoring.EventProcessor.Location.Redis;
@@ -29,9 +25,9 @@ namespace TeamMonitoring.EventProcessor
 
                     services.AddRedisConnectionMultiplexer(hostContext.Configuration);
 
-                    services.AddSingleton(typeof(ILocationCache), typeof(RedisLocationCache));
-                    services.AddSingleton(typeof(IEventSubscriber), typeof(AMQPEventSubscriber));
-                    services.AddSingleton(typeof(IEventEmitter), typeof(AMQPEventEmitter));
+                    services.AddSingleton<ILocationCache, RedisLocationCache>();
+                    services.AddSingleton<IEventSubscriber, AMQPEventSubscriber>();
+                    services.AddSingleton<IEventEmitter, AMQPEventEmitter>();
 
                     services.AddHostedService<MemberLocationEventProcessor>();
                 });

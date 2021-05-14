@@ -4,11 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using TeamMonitoring.LocationReporter.API.Events;
-using TeamMonitoring.LocationReporter.API.Models;
-using TeamMonitoring.LocationReporter.API.Services;
+using TeamMonitoring.RealityService.Location;
+using TeamMonitoring.RealityService.Location.Redis;
 
-namespace TeamMonitoring.LocationReporter.API
+namespace TeamMonitoring.RealityService.API
 {
     public class Startup
     {
@@ -26,16 +25,12 @@ namespace TeamMonitoring.LocationReporter.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TeamMonitoring.LocationReporter.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TeamMonitoring.RealityService.API", Version = "v1" });
             });
 
 
-            services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));
-            services.Configure<TeamServiceOptions>(Configuration.GetSection("teamservice"));
-
-            services.AddSingleton<IEventEmitter, AMQPEventEmitter>();
-            services.AddSingleton<ICommandEventConverter, CommandEventConverter>();
-            services.AddSingleton<ITeamServiceClient, HttpTeamServiceClient>();
+            services.AddRedisConnectionMultiplexer(Configuration);
+            services.AddSingleton<ILocationCache, RedisLocationCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +40,7 @@ namespace TeamMonitoring.LocationReporter.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TeamMonitoring.LocationReporter.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TeamMonitoring.RealityService.API v1"));
             }
 
             app.UseHttpsRedirection();

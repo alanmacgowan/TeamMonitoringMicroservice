@@ -1,9 +1,11 @@
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 
-namespace TeamMonitoring.EventProcessor.Location.Redis
+namespace TeamMonitoring.RealityService.Location.Redis
 {
     public class RedisLocationCache : ILocationCache
     {
@@ -20,9 +22,6 @@ namespace TeamMonitoring.EventProcessor.Location.Redis
             logger.LogInformation($"Using redis location cache - {connectionMultiplexer.Configuration}");
         }
 
-        // This is a hack required to get injection working
-        // because Steeltoe's redis connector injected the concrete class as binding
-        // and not the interface.
         public RedisLocationCache(ILogger<RedisLocationCache> logger,
             ConnectionMultiplexer connectionMultiplexer) : this(logger, (IConnectionMultiplexer)connectionMultiplexer)
         {
@@ -45,6 +44,15 @@ namespace TeamMonitoring.EventProcessor.Location.Redis
             db.HashSet(teamId.ToString(), memberLocation.MemberID.ToString(), memberLocation.ToJsonString());
         }
 
+        public MemberLocation Get(Guid teamId, Guid memberId)
+        {
+            IDatabase db = connection.GetDatabase();
+
+            var value = (string)db.HashGet(teamId.ToString(), memberId.ToString());
+            MemberLocation ml = MemberLocation.FromJsonString(value);
+            return ml;
+        }
+
         private IList<MemberLocation> ConvertRedisValsToLocationList(RedisValue[] vals)
         {
             List<MemberLocation> memberLocations = new List<MemberLocation>();
@@ -57,6 +65,28 @@ namespace TeamMonitoring.EventProcessor.Location.Redis
             }
 
             return memberLocations;
+        }
+    }
+
+    public static class RedisExtensions
+    {
+        public static IServiceCollection AddRedisConnectionMultiplexer(this IServiceCollection services,
+            IConfiguration config)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (config == null)
+            {
+                throw new ArgumentNullException(nameof(config));
+            }
+
+            var redisConfig = config.GetSection("redis:configstring").Value;
+
+            services.AddSingleton(typeof(IConnectionMultiplexer), ConnectionMultiplexer.ConnectAsync(redisConfig).Result);
+            return services;
         }
     }
 }

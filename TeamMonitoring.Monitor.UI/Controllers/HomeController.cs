@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using TeamMonitoring.Monitor.UI.Models;
 
 namespace TeamMonitoring.Monitor.UI.Controllers
@@ -12,15 +9,17 @@ namespace TeamMonitoring.Monitor.UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly HubOptions _hubOptions;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IOptions<HubOptions> hubOptions)
         {
             _logger = logger;
+            _hubOptions = hubOptions.Value;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(new ProximityEventsViewModel { HubUrl = _hubOptions.HubUrl });
         }
 
         public IActionResult Privacy()

@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using TeamMonitoring.EventProcessor.Location;
-using System.Linq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using TeamMonitoring.EventProcessor.Location;
 
 namespace TeamMonitoring.EventProcessor.Events
 {
@@ -19,16 +19,19 @@ namespace TeamMonitoring.EventProcessor.Events
             double distanceThreshold)
         {
             GpsUtility gpsUtility = new GpsUtility();
-            GpsCoordinate sourceCoordinate = new GpsCoordinate() {
+            GpsCoordinate sourceCoordinate = new GpsCoordinate()
+            {
                 Latitude = memberLocationEvent.Latitude,
                 Longitude = memberLocationEvent.Longitude
             };
-       
-            return memberLocations.Where( 
-                      ml => ml.MemberID != memberLocationEvent.MemberID &&                     
-                      gpsUtility.DistanceBetweenPoints(sourceCoordinate, ml.Location) < distanceThreshold)            
-                .Select( ml => {
-                    return new ProximityDetectedEvent() {
+
+            return memberLocations.Where(
+                      ml => ml.MemberID != memberLocationEvent.MemberID &&
+                      gpsUtility.DistanceBetweenPoints(sourceCoordinate, ml.Location) < distanceThreshold)
+                .Select(ml =>
+                {
+                    return new ProximityDetectedEvent()
+                    {
                         SourceMemberID = memberLocationEvent.MemberID,
                         TargetMemberID = ml.MemberID,
                         TeamID = memberLocationEvent.TeamID,
@@ -37,7 +40,7 @@ namespace TeamMonitoring.EventProcessor.Events
                         TargetMemberLocation = ml.Location,
                         MemberDistance = gpsUtility.DistanceBetweenPoints(sourceCoordinate, ml.Location)
                     };
-                }).ToList();                            
+                }).ToList();
         }
     }
 }

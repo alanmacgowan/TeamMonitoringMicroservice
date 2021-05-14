@@ -1,11 +1,11 @@
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using TeamMonitoring.EventProcessor.Events;
 using RabbitMQ.Client;
-using System.Text;
-using TeamMonitoring.EventProcessor.Models;
 using System;
+using System.Text;
+using TeamMonitoring.EventProcessor.Events;
+using TeamMonitoring.EventProcessor.Models;
 
 namespace TeamMonitoring.EventProcessor.Queues.AMQP
 {

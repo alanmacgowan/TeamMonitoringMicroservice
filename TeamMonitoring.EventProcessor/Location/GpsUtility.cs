@@ -2,23 +2,23 @@ using System;
 
 namespace TeamMonitoring.EventProcessor.Location
 {
-    public class GpsUtility 
+    public class GpsUtility
     {
         private const double C_EARTH = 40000.0;
 
         public double DegToRad(double angle)
         {
-            return (Math.PI / 180) * angle;
+            return (Math.PI / 180) * angle;
         }
 
         /*
          * Returns the distance between two GPS coordinates in kilometers.         
          */
         public double DistanceBetweenPoints(GpsCoordinate point1, GpsCoordinate point2)
-        {            
+        {
             double distance = 0.0;
-        
-        
+
+
             double lat1Rad = DegToRad(point1.Latitude);
             double long1Rad = DegToRad(point1.Longitude);
             double lat2Rad = DegToRad(point2.Latitude);
@@ -30,7 +30,7 @@ namespace TeamMonitoring.EventProcessor.Location
             {
                 longDiff = 2.0 * Math.PI - longDiff;
             }
-        
+
             double angleCalculation =
                 Math.Acos(
                     Math.Sin(lat2Rad) * Math.Sin(lat1Rad) +

@@ -1,10 +1,9 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using TeamMonitoring.ProximityMonitor.Queues;
 using TeamMonitoring.ProximityMonitor.Realtime;
 //using TeamMonitoring.ProximityMonitor.Realtime;
@@ -27,7 +26,7 @@ namespace TeamMonitoring.ProximityMonitor.Events
             IEventSubscriber subscriber,
             ITeamServiceClient teamClient,
             IHubContext<TeamMonitoringHub, ITeamMonitoringHub> monitoringHub)
-            //,IOptions<PubnubOptions> pubnubOptions)
+        //,IOptions<PubnubOptions> pubnubOptions)
         {
             _monitoringHub = monitoringHub;
             _logger = logger;
@@ -35,9 +34,10 @@ namespace TeamMonitoring.ProximityMonitor.Events
             //this.publisher = publisher;
             _subscriber = subscriber;
             _teamClient = teamClient;
-            _logger.LogInformation("Created Proximity Event Processor.");        
+            _logger.LogInformation("Created Proximity Event Processor.");
 
-            _subscriber.ProximityDetectedEventReceived += async (pde) => {
+            _subscriber.ProximityDetectedEventReceived += async (pde) =>
+            {
                 Team t = _teamClient.GetTeam(pde.TeamID);
                 Member sourceMember = _teamClient.GetMember(pde.TeamID, pde.SourceMemberID);
                 Member targetMember = _teamClient.GetMember(pde.TeamID, pde.TargetMemberID);

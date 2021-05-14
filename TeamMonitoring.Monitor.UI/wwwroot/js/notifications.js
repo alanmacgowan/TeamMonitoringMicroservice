@@ -1,18 +1,14 @@
 ﻿let connection = null;
+let hubUrl = $("#HubUrl").val();
 
 setupConnection = () => {
     connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:44316/hubs/monitoring")
+        .withUrl(hubUrl + "/hubs/monitoring")
         .build();
 
     connection.on("ProximityDetectedNotification", (event) => {
         const statusDiv = document.getElementById("status");
-        statusDiv.innerHTML = event.sourceMemberName;
-    }
-    );
-
-    connection.on("finished", function () {
-        connection.stop();
+        statusDiv.innerHTML += '<div> Team: ' + event.teamName + ' - Source: '  + event.sourceMemberName + ' - Target: ' + event.targetMemberName + '</div>';       
     }
     );
 

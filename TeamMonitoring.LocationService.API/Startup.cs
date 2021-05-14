@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
 using TeamMonitoring.LocationService.API.Models;
 using TeamMonitoring.LocationService.API.Persistence;
 

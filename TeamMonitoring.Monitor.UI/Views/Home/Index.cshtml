@@ -1,15 +1,24 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model TeamMonitoring.Monitor.UI.Models.ProximityEventsViewModel
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
+
+<span>Proximity Events:</span>
+<hr />
 <div class="col-md-6">
     <div id="status"></div>
 </div>
 
-<script src="~/js/signalr.js"></script>
-<script src="~/js/notifications.js"></script>
+
+@Html.HiddenFor(model => model.HubUrl)
+
+@section scripts{
+    <script src="~/js/signalr.js"></script>
+    <script src="~/js/notifications.js"></script>
+}

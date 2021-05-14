@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace TeamMonitoring.EventProcessor.Location
+namespace TeamMonitoring.RealityService.Location
 {
     public class MemberLocation
     {

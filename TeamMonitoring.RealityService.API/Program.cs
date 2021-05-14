@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace TeamMonitoring.ProximityMonitor
+namespace TeamMonitoring.RealityService.API
 {
     public class Program
     {
