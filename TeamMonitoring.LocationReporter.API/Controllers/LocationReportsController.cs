@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using TeamMonitoring.LocationReporter.API.Events;
 using TeamMonitoring.LocationReporter.API.Models;
+using TeamMonitoring.LocationReporter.API.Queues;
 using TeamMonitoring.LocationReporter.API.Services;
 
 namespace TeamMonitoring.LocationReporter.API.Controllers

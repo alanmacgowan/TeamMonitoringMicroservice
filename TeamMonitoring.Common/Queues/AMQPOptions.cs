@@ -1,4 +1,4 @@
-namespace TeamMonitoring.EventProcessor.Models
+namespace TeamMonitoring.Common.Queues
 {
     public class AMQPOptions
     {

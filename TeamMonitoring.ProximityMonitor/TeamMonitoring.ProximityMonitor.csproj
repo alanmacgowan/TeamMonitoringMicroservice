@@ -11,15 +11,16 @@
     <Compile Remove="Realtime\PubnubRealtimePublisher.cs" />
     <Compile Remove="Realtime\RealtimeServiceCollectionExtensions.cs" />
   </ItemGroup>
-
-  <ItemGroup>
-  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\TeamMonitoring.Common\TeamMonitoring.Common.csproj" />
   </ItemGroup>
   
   <ItemGroup>

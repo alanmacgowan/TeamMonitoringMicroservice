@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TeamMonitoring.Common.Queues;
 using TeamMonitoring.ProximityMonitor.Events;
 using TeamMonitoring.ProximityMonitor.Queues;
 using TeamMonitoring.ProximityMonitor.Realtime;
@@ -33,11 +34,12 @@ namespace TeamMonitoring.ProximityMonitor
             services.AddSignalR();
 
             services.Configure<QueueOptions>(Configuration.GetSection("QueueOptions"));
-            //services.Configure<PubnubOptions>(Configuration.GetSection("PubnubOptions"));
             services.Configure<TeamServiceOptions>(Configuration.GetSection("teamservice"));
             services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));
 
-            services.AddSingleton<IEventSubscriber, RabbitMQEventSubscriber>();
+            services.AddAMQPConnection();
+
+            services.AddSingleton<IEventSubscriber, AMQPEventSubscriber>();
             services.AddTransient<ITeamServiceClient, HttpTeamServiceClient>();
 
             services.AddHostedService<ProximityDetectedEventProcessor>();

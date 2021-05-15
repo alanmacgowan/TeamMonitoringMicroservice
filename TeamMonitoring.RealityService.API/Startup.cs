@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TeamMonitoring.Common.Redis;
 using TeamMonitoring.RealityService.Location;
 using TeamMonitoring.RealityService.Location.Redis;
 

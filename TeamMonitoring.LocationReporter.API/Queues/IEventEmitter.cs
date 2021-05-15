@@ -1,4 +1,6 @@
-namespace TeamMonitoring.LocationReporter.API.Events
+using TeamMonitoring.LocationReporter.API.Events;
+
+namespace TeamMonitoring.LocationReporter.API.Queues
 {
     public interface IEventEmitter
     {

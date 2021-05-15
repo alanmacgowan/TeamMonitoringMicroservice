@@ -3,12 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using System;
 
-namespace TeamMonitoring.EventProcessor.Location.Redis
+namespace TeamMonitoring.Common.Redis
 {
     public static class RedisExtensions
     {
-        public static IServiceCollection AddRedisConnectionMultiplexer(this IServiceCollection services,
-            IConfiguration config)
+        public static IServiceCollection AddRedisConnectionMultiplexer(this IServiceCollection services, IConfiguration config)
         {
             if (services == null)
             {

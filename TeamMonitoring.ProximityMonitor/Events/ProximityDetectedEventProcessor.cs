@@ -14,24 +14,18 @@ namespace TeamMonitoring.ProximityMonitor.Events
     public class ProximityDetectedEventProcessor : BackgroundService, IEventProcessor
     {
         private ILogger _logger;
-        //private IRealtimePublisher publisher;
         private ITeamServiceClient _teamClient;
         private IEventSubscriber _subscriber;
         private IHubContext<TeamMonitoringHub, ITeamMonitoringHub> _monitoringHub;
-        //private PubnubOptions pubnubOptions;
 
         public ProximityDetectedEventProcessor(
             ILogger<ProximityDetectedEventProcessor> logger,
-            //IRealtimePublisher publisher,
             IEventSubscriber subscriber,
             ITeamServiceClient teamClient,
             IHubContext<TeamMonitoringHub, ITeamMonitoringHub> monitoringHub)
-        //,IOptions<PubnubOptions> pubnubOptions)
         {
             _monitoringHub = monitoringHub;
             _logger = logger;
-            //this.pubnubOptions = pubnubOptions.Value;
-            //this.publisher = publisher;
             _subscriber = subscriber;
             _teamClient = teamClient;
             _logger.LogInformation("Created Proximity Event Processor.");

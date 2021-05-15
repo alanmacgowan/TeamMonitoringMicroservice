@@ -11,11 +11,11 @@ namespace TeamMonitoring.EventProcessor.Events
 {
     public class MemberLocationEventProcessor : BackgroundService, IEventProcessor
     {
-        private ILogger _logger;
-        private IEventSubscriber _subscriber;
-        private IEventEmitter _eventEmitter;
-        private ProximityDetector _proximityDetector;
-        private ILocationCache _locationCache;
+        protected readonly ILogger _logger;
+        protected readonly IEventSubscriber _subscriber;
+        protected readonly IEventEmitter _eventEmitter;
+        protected readonly ProximityDetector _proximityDetector;
+        protected readonly ILocationCache _locationCache;
 
         public MemberLocationEventProcessor(
             ILogger<MemberLocationEventProcessor> logger,

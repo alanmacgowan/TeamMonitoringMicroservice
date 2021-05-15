@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TeamMonitoring.Common.Queues;
+using TeamMonitoring.Common.Redis;
 using TeamMonitoring.EventProcessor.Events;
 using TeamMonitoring.EventProcessor.Location;
 using TeamMonitoring.EventProcessor.Location.Redis;
-using TeamMonitoring.EventProcessor.Models;
 using TeamMonitoring.EventProcessor.Queues;
-using TeamMonitoring.EventProcessor.Queues.AMQP;
 
 namespace TeamMonitoring.EventProcessor
 {
@@ -24,6 +24,8 @@ namespace TeamMonitoring.EventProcessor
                     services.Configure<AMQPOptions>(hostContext.Configuration.GetSection("amqp"));
 
                     services.AddRedisConnectionMultiplexer(hostContext.Configuration);
+
+                    services.AddAMQPConnection();
 
                     services.AddSingleton<ILocationCache, RedisLocationCache>();
                     services.AddSingleton<IEventSubscriber, AMQPEventSubscriber>();

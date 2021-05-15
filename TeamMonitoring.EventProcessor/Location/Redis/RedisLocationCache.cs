@@ -7,15 +7,14 @@ namespace TeamMonitoring.EventProcessor.Location.Redis
 {
     public class RedisLocationCache : ILocationCache
     {
-        private ILogger logger;
-
-        private IConnectionMultiplexer connection;
+        private ILogger _logger;
+        private IConnectionMultiplexer _connection;
 
         public RedisLocationCache(ILogger<RedisLocationCache> logger,
             IConnectionMultiplexer connectionMultiplexer)
         {
-            this.logger = logger;
-            this.connection = connectionMultiplexer;
+            _logger = logger;
+            _connection = connectionMultiplexer;
 
             logger.LogInformation($"Using redis location cache - {connectionMultiplexer.Configuration}");
         }
@@ -31,7 +30,7 @@ namespace TeamMonitoring.EventProcessor.Location.Redis
 
         public IList<MemberLocation> GetMemberLocations(Guid teamId)
         {
-            IDatabase db = connection.GetDatabase();
+            IDatabase db = _connection.GetDatabase();
 
             RedisValue[] vals = db.HashValues(teamId.ToString());
 
@@ -40,7 +39,7 @@ namespace TeamMonitoring.EventProcessor.Location.Redis
 
         public void Put(Guid teamId, MemberLocation memberLocation)
         {
-            IDatabase db = connection.GetDatabase();
+            IDatabase db = _connection.GetDatabase();
 
             db.HashSet(teamId.ToString(), memberLocation.MemberID.ToString(), memberLocation.ToJsonString());
         }
