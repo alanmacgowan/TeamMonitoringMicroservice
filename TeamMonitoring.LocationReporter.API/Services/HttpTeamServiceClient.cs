@@ -1,10 +1,8 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using TeamMonitoring.LocationReporter.API.Models;
 
 namespace TeamMonitoring.LocationReporter.API.Services
 {

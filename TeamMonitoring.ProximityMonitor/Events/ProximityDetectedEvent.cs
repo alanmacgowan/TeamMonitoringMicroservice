@@ -1,10 +1,11 @@
 using Newtonsoft.Json;
 using System;
+using TeamMonitoring.Common.Queues;
 using TeamMonitoring.ProximityMonitor.Location;
 
 namespace TeamMonitoring.ProximityMonitor.Events
 {
-    public class ProximityDetectedEvent
+    public class ProximityDetectedEvent : IEvent<ProximityDetectedEvent>
     {
         public Guid SourceMemberID { get; set; }
         public Guid TargetMemberID { get; set; }
@@ -17,6 +18,11 @@ namespace TeamMonitoring.ProximityMonitor.Events
         public string toJson()
         {
             return JsonConvert.SerializeObject(this);
+        }
+
+        public ProximityDetectedEvent FromJson(string jsonBody)
+        {
+            return JsonConvert.DeserializeObject<ProximityDetectedEvent>(jsonBody);
         }
     }
 }

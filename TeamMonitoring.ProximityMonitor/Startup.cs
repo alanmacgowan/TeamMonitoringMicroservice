@@ -7,7 +7,6 @@ using RabbitMQ.Client.Events;
 using TeamMonitoring.Common.HttpClient;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.ProximityMonitor.Events;
-using TeamMonitoring.ProximityMonitor.Queues;
 using TeamMonitoring.ProximityMonitor.Realtime;
 using TeamMonitoring.ProximityMonitor.TeamService;
 
@@ -35,7 +34,6 @@ namespace TeamMonitoring.ProximityMonitor
 
             services.AddSignalR();
 
-            services.Configure<QueueOptions>(Configuration.GetSection("QueueOptions"));
             services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));
 
             services.AddAMQPConnection();
@@ -44,7 +42,7 @@ namespace TeamMonitoring.ProximityMonitor
             services.AddHttpClientService("TeamAPI", teamServiceOptions.Url);
 
             services.AddSingleton<EventingBasicConsumer, AMQPEventingConsumer>();
-            services.AddSingleton<IEventSubscriber, AMQPEventSubscriber>();
+            services.AddSingleton(typeof(IEventSubscriber<>), typeof(EventSubscriber<>));
             services.AddTransient<ITeamServiceClient, HttpTeamServiceClient>();
 
             services.AddHostedService<ProximityDetectedEventProcessor>();

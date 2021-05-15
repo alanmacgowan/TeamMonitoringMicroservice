@@ -4,11 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TeamMonitoring.Common.HttpClient;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.LocationReporter.API.Models;
-using TeamMonitoring.LocationReporter.API.Queues;
 using TeamMonitoring.LocationReporter.API.Services;
-using TeamMonitoring.Common.HttpClient;
 
 namespace TeamMonitoring.LocationReporter.API
 {
@@ -33,14 +32,13 @@ namespace TeamMonitoring.LocationReporter.API
 
 
             services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));
-            services.Configure<QueueOptions>(Configuration.GetSection("QueueOptions"));
 
             services.AddAMQPConnection();
 
             var teamServiceOptions = Configuration.GetSection("teamservice").Get<TeamServiceOptions>();
             services.AddHttpClientService("TeamAPI", teamServiceOptions.Url);
 
-            services.AddSingleton<IEventEmitter, AMQPEventEmitter>();
+            services.AddSingleton(typeof(IEventEmitter<>), typeof(EventEmitter<>));
             services.AddSingleton<ICommandEventConverter, CommandEventConverter>();
             services.AddSingleton<ITeamServiceClient, HttpTeamServiceClient>();
         }

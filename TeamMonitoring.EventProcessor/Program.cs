@@ -6,7 +6,6 @@ using TeamMonitoring.Common.Redis;
 using TeamMonitoring.EventProcessor.Events;
 using TeamMonitoring.EventProcessor.Location;
 using TeamMonitoring.EventProcessor.Location.Redis;
-using TeamMonitoring.EventProcessor.Queues;
 
 namespace TeamMonitoring.EventProcessor
 {
@@ -21,7 +20,6 @@ namespace TeamMonitoring.EventProcessor
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.Configure<QueueOptions>(hostContext.Configuration.GetSection("QueueOptions"));
                     services.Configure<AMQPOptions>(hostContext.Configuration.GetSection("amqp"));
 
                     services.AddRedisConnectionMultiplexer(hostContext.Configuration);
@@ -30,8 +28,8 @@ namespace TeamMonitoring.EventProcessor
 
                     services.AddSingleton<EventingBasicConsumer, AMQPEventingConsumer>();
                     services.AddSingleton<ILocationCache, RedisLocationCache>();
-                    services.AddSingleton<IEventSubscriber, AMQPEventSubscriber>();
-                    services.AddSingleton<IEventEmitter, AMQPEventEmitter>();
+                    services.AddSingleton(typeof(IEventSubscriber<>), typeof(EventSubscriber<>));
+                    services.AddSingleton(typeof(IEventEmitter<>), typeof(EventEmitter<>));
 
                     services.AddHostedService<MemberLocationEventProcessor>();
                 });

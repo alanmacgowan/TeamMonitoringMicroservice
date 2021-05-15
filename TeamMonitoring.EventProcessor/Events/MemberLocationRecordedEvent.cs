@@ -1,9 +1,10 @@
 using Newtonsoft.Json;
 using System;
+using TeamMonitoring.Common.Queues;
 
 namespace TeamMonitoring.EventProcessor.Events
 {
-    public class MemberLocationRecordedEvent
+    public class MemberLocationRecordedEvent : IEvent<MemberLocationRecordedEvent>
     {
         public String Origin { get; set; }
         public double Latitude { get; set; }
@@ -18,7 +19,7 @@ namespace TeamMonitoring.EventProcessor.Events
             return JsonConvert.SerializeObject(this);
         }
 
-        public static MemberLocationRecordedEvent FromJson(string jsonBody)
+        public MemberLocationRecordedEvent FromJson(string jsonBody)
         {
             return JsonConvert.DeserializeObject<MemberLocationRecordedEvent>(jsonBody);
         }

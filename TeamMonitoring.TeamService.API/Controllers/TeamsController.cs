@@ -26,7 +26,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
         {
             Team team = _repository.Get(id);
 
-            if (team != null)	  
+            if (team != null)
             {
                 return this.Ok(team);
             }

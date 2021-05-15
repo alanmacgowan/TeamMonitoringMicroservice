@@ -4,32 +4,32 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using TeamMonitoring.Common.Queues;
 using TeamMonitoring.EventProcessor.Location;
-using TeamMonitoring.EventProcessor.Queues;
 
 namespace TeamMonitoring.EventProcessor.Events
 {
     public class MemberLocationEventProcessor : BackgroundService, IEventProcessor
     {
         protected readonly ILogger _logger;
-        protected readonly IEventSubscriber _subscriber;
-        protected readonly IEventEmitter _eventEmitter;
+        protected readonly IEventSubscriber<MemberLocationRecordedEvent> _eventSubscriber;
+        protected readonly IEventEmitter<ProximityDetectedEvent> _eventEmitter;
         protected readonly ProximityDetector _proximityDetector;
         protected readonly ILocationCache _locationCache;
 
         public MemberLocationEventProcessor(ILogger<MemberLocationEventProcessor> logger,
-                                            IEventSubscriber eventSubscriber,
-                                            IEventEmitter eventEmitter,
+                                            IEventSubscriber<MemberLocationRecordedEvent> eventSubscriber,
+                                            IEventEmitter<ProximityDetectedEvent> eventEmitter,
                                             ILocationCache locationCache
         )
         {
             _logger = logger;
-            _subscriber = eventSubscriber;
+            _eventSubscriber = eventSubscriber;
             _eventEmitter = eventEmitter;
             _proximityDetector = new ProximityDetector();
             _locationCache = locationCache;
 
-            _subscriber.MemberLocationRecordedEventReceived += (mlre) =>
+            _eventSubscriber.EventReceived += (mlre) =>
             {
                 _logger.LogInformation($"MemberLocationRecordedEvent Received: {mlre.MemberID}");
 
@@ -37,7 +37,7 @@ namespace TeamMonitoring.EventProcessor.Events
                 ICollection<ProximityDetectedEvent> proximityEvents = _proximityDetector.DetectProximityEvents(mlre, memberLocations, 30.0f);
                 foreach (var proximityEvent in proximityEvents)
                 {
-                    _eventEmitter.EmitProximityDetectedEvent(proximityEvent);
+                    _eventEmitter.EmitEvent(proximityEvent);
                 }
 
                 _locationCache.Put(mlre.TeamID, new MemberLocation
@@ -65,12 +65,12 @@ namespace TeamMonitoring.EventProcessor.Events
 
         public void Start()
         {
-            _subscriber.Subscribe();
+            _eventSubscriber.Subscribe();
         }
 
         public void Stop()
         {
-            _subscriber.Unsubscribe();
+            _eventSubscriber.Unsubscribe();
         }
     }
 }

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
+using TeamMonitoring.Common.Queues;
 using TeamMonitoring.LocationReporter.API.Events;
 using TeamMonitoring.LocationReporter.API.Models;
-using TeamMonitoring.LocationReporter.API.Queues;
 using TeamMonitoring.LocationReporter.API.Services;
 
 namespace TeamMonitoring.LocationReporter.API.Controllers
@@ -11,12 +11,12 @@ namespace TeamMonitoring.LocationReporter.API.Controllers
     public class LocationReportsController : ControllerBase
     {
         private ICommandEventConverter converter;
-        private IEventEmitter eventEmitter;
+        private IEventEmitter<MemberLocationRecordedEvent> eventEmitter;
         private ITeamServiceClient teamServiceClient;
 
 
         public LocationReportsController(ICommandEventConverter converter,
-            IEventEmitter eventEmitter,
+            IEventEmitter<MemberLocationRecordedEvent> eventEmitter,
             ITeamServiceClient teamServiceClient)
         {
             this.converter = converter;
@@ -29,7 +29,7 @@ namespace TeamMonitoring.LocationReporter.API.Controllers
         {
             MemberLocationRecordedEvent locationRecordedEvent = converter.CommandToEvent(locationReport);
             locationRecordedEvent.TeamID = teamServiceClient.GetTeamForMember(locationReport.MemberID);
-            eventEmitter.EmitLocationRecordedEvent(locationRecordedEvent);
+            eventEmitter.EmitEvent(locationRecordedEvent);
 
             return this.Created($"/api/members/{memberId}/locationreports/{locationReport.ReportID}", locationReport);
         }

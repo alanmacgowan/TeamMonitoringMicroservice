@@ -4,9 +4,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using TeamMonitoring.ProximityMonitor.Queues;
+using TeamMonitoring.Common.Queues;
 using TeamMonitoring.ProximityMonitor.Realtime;
-//using TeamMonitoring.ProximityMonitor.Realtime;
 using TeamMonitoring.ProximityMonitor.TeamService;
 
 namespace TeamMonitoring.ProximityMonitor.Events
@@ -15,14 +14,13 @@ namespace TeamMonitoring.ProximityMonitor.Events
     {
         private ILogger _logger;
         private ITeamServiceClient _teamClient;
-        private IEventSubscriber _subscriber;
+        private IEventSubscriber<ProximityDetectedEvent> _subscriber;
         private IHubContext<TeamMonitoringHub, ITeamMonitoringHub> _monitoringHub;
 
-        public ProximityDetectedEventProcessor(
-            ILogger<ProximityDetectedEventProcessor> logger,
-            IEventSubscriber subscriber,
-            ITeamServiceClient teamClient,
-            IHubContext<TeamMonitoringHub, ITeamMonitoringHub> monitoringHub)
+        public ProximityDetectedEventProcessor(ILogger<ProximityDetectedEventProcessor> logger,
+                                               IEventSubscriber<ProximityDetectedEvent> subscriber,
+                                               ITeamServiceClient teamClient,
+                                               IHubContext<TeamMonitoringHub, ITeamMonitoringHub> monitoringHub)
         {
             _monitoringHub = monitoringHub;
             _logger = logger;
@@ -30,29 +28,34 @@ namespace TeamMonitoring.ProximityMonitor.Events
             _teamClient = teamClient;
             _logger.LogInformation("Created Proximity Event Processor.");
 
-            _subscriber.ProximityDetectedEventReceived += async (pde) =>
+            _subscriber.EventReceived += async (pde) =>
             {
-                Team t = _teamClient.GetTeam(pde.TeamID);
-                Member sourceMember = _teamClient.GetMember(pde.TeamID, pde.SourceMemberID);
-                Member targetMember = _teamClient.GetMember(pde.TeamID, pde.TargetMemberID);
-
-                ProximityDetectedRealtimeEvent outEvent = new ProximityDetectedRealtimeEvent
-                {
-                    TargetMemberID = pde.TargetMemberID,
-                    SourceMemberID = pde.SourceMemberID,
-                    DetectionTime = pde.DetectionTime,
-                    SourceMemberLocation = pde.SourceMemberLocation,
-                    TargetMemberLocation = pde.TargetMemberLocation,
-                    MemberDistance = pde.MemberDistance,
-                    TeamID = pde.TeamID,
-                    TeamName = t.Name,
-                    SourceMemberName = $"{sourceMember.FirstName} {sourceMember.LastName}",
-                    TargetMemberName = $"{targetMember.FirstName} {targetMember.LastName}"
-                };
-                await _monitoringHub.Clients.All.ProximityDetectedNotification(outEvent);
+                await NotifyProximityDetectedRealtimeEvent(pde);
             };
 
             Start();
+        }
+
+        private async Task NotifyProximityDetectedRealtimeEvent(ProximityDetectedEvent pde)
+        {
+            var team = _teamClient.GetTeam(pde.TeamID);
+            var sourceMember = _teamClient.GetMember(pde.TeamID, pde.SourceMemberID);
+            var targetMember = _teamClient.GetMember(pde.TeamID, pde.TargetMemberID);
+
+            var outEvent = new ProximityDetectedRealtimeEvent
+            {
+                TargetMemberID = pde.TargetMemberID,
+                SourceMemberID = pde.SourceMemberID,
+                DetectionTime = pde.DetectionTime,
+                SourceMemberLocation = pde.SourceMemberLocation,
+                TargetMemberLocation = pde.TargetMemberLocation,
+                MemberDistance = pde.MemberDistance,
+                TeamID = pde.TeamID,
+                TeamName = team.Name,
+                SourceMemberName = $"{sourceMember.FirstName} {sourceMember.LastName}",
+                TargetMemberName = $"{targetMember.FirstName} {targetMember.LastName}"
+            };
+            await _monitoringHub.Clients.All.ProximityDetectedNotification(outEvent);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
