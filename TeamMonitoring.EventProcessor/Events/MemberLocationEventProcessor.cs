@@ -17,11 +17,10 @@ namespace TeamMonitoring.EventProcessor.Events
         protected readonly ProximityDetector _proximityDetector;
         protected readonly ILocationCache _locationCache;
 
-        public MemberLocationEventProcessor(
-            ILogger<MemberLocationEventProcessor> logger,
-            IEventSubscriber eventSubscriber,
-            IEventEmitter eventEmitter,
-            ILocationCache locationCache
+        public MemberLocationEventProcessor(ILogger<MemberLocationEventProcessor> logger,
+                                            IEventSubscriber eventSubscriber,
+                                            IEventEmitter eventEmitter,
+                                            ILocationCache locationCache
         )
         {
             _logger = logger;

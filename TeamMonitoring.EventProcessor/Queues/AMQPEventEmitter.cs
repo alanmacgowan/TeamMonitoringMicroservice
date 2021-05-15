@@ -1,4 +1,3 @@
-
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
@@ -26,9 +25,9 @@ namespace TeamMonitoring.EventProcessor.Queues
 
         public void EmitProximityDetectedEvent(ProximityDetectedEvent proximityDetectedEvent)
         {
-            using (IConnection conn = _connectionFactory.CreateConnection())
+            using (var conn = _connectionFactory.CreateConnection())
             {
-                using (IModel channel = conn.CreateModel())
+                using (var channel = conn.CreateModel())
                 {
                     channel.QueueDeclare(
                         queue: _queueOptions.ProximityDetectedEventQueueName,
@@ -37,7 +36,7 @@ namespace TeamMonitoring.EventProcessor.Queues
                         autoDelete: false,
                         arguments: null
                     );
-                    string jsonPayload = proximityDetectedEvent.toJson();
+                    var jsonPayload = proximityDetectedEvent.toJson();
                     var body = Encoding.UTF8.GetBytes(jsonPayload);
                     channel.BasicPublish(
                         exchange: "",

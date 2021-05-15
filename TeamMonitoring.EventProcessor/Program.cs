@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client.Events;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.Common.Redis;
 using TeamMonitoring.EventProcessor.Events;
@@ -27,6 +28,7 @@ namespace TeamMonitoring.EventProcessor
 
                     services.AddAMQPConnection();
 
+                    services.AddSingleton<EventingBasicConsumer, AMQPEventingConsumer>();
                     services.AddSingleton<ILocationCache, RedisLocationCache>();
                     services.AddSingleton<IEventSubscriber, AMQPEventSubscriber>();
                     services.AddSingleton<IEventEmitter, AMQPEventEmitter>();

@@ -11,26 +11,23 @@ namespace TeamMonitoring.EventProcessor.Queues
     public class AMQPEventSubscriber : IEventSubscriber
     {
         public event MemberLocationRecordedEventReceivedDelegate MemberLocationRecordedEventReceived;
-        
+
         protected readonly ILogger _logger;
-        protected readonly EventingBasicConsumer _consumer;
-        protected readonly QueueOptions _queueOptions;
-        protected string _consumerTag;
-        protected readonly IModel _channel;
         protected readonly IConnectionFactory _connectionFactory;
+        protected readonly QueueOptions _queueOptions;
+        protected readonly EventingBasicConsumer _consumer;
+        protected readonly IModel _channel;
+        protected string _consumerTag;
 
         public AMQPEventSubscriber(ILogger<AMQPEventSubscriber> logger,
                                    IOptions<QueueOptions> queueOptions,
-                                   IConnectionFactory connectionFactory)
+                                   IConnectionFactory connectionFactory,
+                                   EventingBasicConsumer consumer)
         {
             _logger = logger;
             _queueOptions = queueOptions.Value;
             _connectionFactory = connectionFactory;
-
-            var basicConsumer = new EventingBasicConsumer(_connectionFactory.CreateConnection().CreateModel());
-
-            _consumer = basicConsumer;
-
+            _consumer = consumer;
             _channel = _consumer.Model;
 
             Initialize();

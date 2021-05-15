@@ -8,25 +8,25 @@ namespace TeamMonitoring.TeamService.API.Controllers
     [Route("[controller]")]
     public class TeamsController : ControllerBase
     {
-        ITeamRepository repository;
+        protected readonly ITeamRepository _repository;
 
         public TeamsController(ITeamRepository repo)
         {
-            repository = repo;
+            _repository = repo;
         }
 
         [HttpGet]
         public virtual IActionResult GetAllTeams()
         {
-            return this.Ok(repository.List());
+            return this.Ok(_repository.List());
         }
 
         [HttpGet("{id}")]
         public IActionResult GetTeam(Guid id)
         {
-            Team team = repository.Get(id);
+            Team team = _repository.Get(id);
 
-            if (team != null) // I HATE NULLS, MUST FIXERATE THIS.			  
+            if (team != null)	  
             {
                 return this.Ok(team);
             }
@@ -39,11 +39,8 @@ namespace TeamMonitoring.TeamService.API.Controllers
         [HttpPost]
         public virtual IActionResult CreateTeam([FromBody] Team newTeam)
         {
-            repository.Add(newTeam);
+            _repository.Add(newTeam);
 
-            //TODO: add test that asserts result is a 201 pointing to URL of the created team.
-            //TODO: teams need IDs
-            //TODO: return created at route to point to team details			
             return this.Created($"/teams/{newTeam.ID}", newTeam);
         }
 
@@ -52,7 +49,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
         {
             team.ID = id;
 
-            if (repository.Update(team) == null)
+            if (_repository.Update(team) == null)
             {
                 return this.NotFound();
             }
@@ -65,7 +62,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
         [HttpDelete("{id}")]
         public virtual IActionResult DeleteTeam(Guid id)
         {
-            Team team = repository.Delete(id);
+            Team team = _repository.Delete(id);
 
             if (team == null)
             {

@@ -10,29 +10,24 @@ namespace TeamMonitoring.LocationReporter.API.Services
 {
     public class HttpTeamServiceClient : ITeamServiceClient
     {
-        private readonly ILogger logger;
+        protected readonly ILogger _logger;
+        protected readonly HttpClient _httpClient;
 
-        private HttpClient httpClient;
-
-        public HttpTeamServiceClient(
-            IOptions<TeamServiceOptions> serviceOptions,
-            ILogger<HttpTeamServiceClient> logger)
+        public HttpTeamServiceClient(ILogger<HttpTeamServiceClient> logger,
+                                     IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
+            _logger = logger;
+            _httpClient = httpClientFactory.CreateClient("TeamAPI");
 
-            var url = serviceOptions.Value.Url;
-
-            logger.LogInformation("Team Service HTTP client using URL {0}", url);
-
-            httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(url);
+            _logger.LogInformation("Team Service HTTP client using URL {0}", _httpClient.BaseAddress.AbsoluteUri);
         }
+
         public Guid GetTeamForMember(Guid memberId)
         {
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = httpClient.GetAsync(String.Format("/members/{0}/team", memberId)).Result;
+            HttpResponseMessage response = _httpClient.GetAsync(String.Format("/members/{0}/team", memberId)).Result;
 
             TeamIDResponse teamIdResponse;
             if (response.IsSuccessStatusCode)

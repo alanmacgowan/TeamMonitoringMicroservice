@@ -29,7 +29,6 @@ namespace TeamMonitoring.RealityService.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TeamMonitoring.RealityService.API", Version = "v1" });
             });
 
-
             services.AddRedisConnectionMultiplexer(Configuration);
             services.AddSingleton<ILocationCache, RedisLocationCache>();
         }

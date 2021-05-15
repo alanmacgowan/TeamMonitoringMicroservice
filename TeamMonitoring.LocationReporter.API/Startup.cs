@@ -8,6 +8,7 @@ using TeamMonitoring.Common.Queues;
 using TeamMonitoring.LocationReporter.API.Models;
 using TeamMonitoring.LocationReporter.API.Queues;
 using TeamMonitoring.LocationReporter.API.Services;
+using TeamMonitoring.Common.HttpClient;
 
 namespace TeamMonitoring.LocationReporter.API
 {
@@ -32,10 +33,12 @@ namespace TeamMonitoring.LocationReporter.API
 
 
             services.Configure<AMQPOptions>(Configuration.GetSection("amqp"));
-            services.Configure<TeamServiceOptions>(Configuration.GetSection("teamservice"));
             services.Configure<QueueOptions>(Configuration.GetSection("QueueOptions"));
 
             services.AddAMQPConnection();
+
+            var teamServiceOptions = Configuration.GetSection("teamservice").Get<TeamServiceOptions>();
+            services.AddHttpClientService("TeamAPI", teamServiceOptions.Url);
 
             services.AddSingleton<IEventEmitter, AMQPEventEmitter>();
             services.AddSingleton<ICommandEventConverter, CommandEventConverter>();

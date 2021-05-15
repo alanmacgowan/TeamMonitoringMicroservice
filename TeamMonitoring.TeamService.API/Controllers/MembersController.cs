@@ -9,18 +9,18 @@ namespace TeamMonitoring.TeamService.API.Controllers
     [Route("/teams/{teamId}/[controller]")]
     public class MembersController : ControllerBase
     {
-        ITeamRepository repository;
+        protected readonly ITeamRepository _repository;
 
         public MembersController(ITeamRepository repo)
         {
-            repository = repo;
+            _repository = repo;
         }
 
         [HttpGet]
         [Route("/teams/{teamID}/[controller]/members")]
         public virtual IActionResult GetMembers(Guid teamID)
         {
-            Team team = repository.Get(teamID);
+            Team team = _repository.Get(teamID);
 
             if (team == null)
             {
@@ -37,7 +37,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
         [Route("/teams/{teamID}/[controller]/{memberId}")]
         public virtual IActionResult GetMember(Guid teamID, Guid memberId)
         {
-            Team team = repository.Get(teamID);
+            Team team = _repository.Get(teamID);
 
             if (team == null)
             {
@@ -62,7 +62,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
         [Route("/teams/{teamID}/[controller]/{memberId}")]
         public virtual IActionResult UpdateMember([FromBody] Member updatedMember, Guid teamID, Guid memberId)
         {
-            Team team = repository.Get(teamID);
+            Team team = _repository.Get(teamID);
 
             if (team == null)
             {
@@ -88,7 +88,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
         [HttpPost]
         public virtual IActionResult CreateMember([FromBody] Member newMember, Guid teamID)
         {
-            Team team = repository.Get(teamID);
+            Team team = _repository.Get(teamID);
 
             if (team == null)
             {
@@ -122,7 +122,7 @@ namespace TeamMonitoring.TeamService.API.Controllers
 
         private Guid GetTeamIdForMember(Guid memberId)
         {
-            foreach (var team in repository.List())
+            foreach (var team in _repository.List())
             {
                 var member = team.Members.FirstOrDefault(m => m.ID == memberId);
                 if (member != null)

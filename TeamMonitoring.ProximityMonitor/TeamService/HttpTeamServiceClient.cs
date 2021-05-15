@@ -9,31 +9,24 @@ namespace TeamMonitoring.ProximityMonitor.TeamService
 {
     public class HttpTeamServiceClient : ITeamServiceClient
     {
-        private readonly TeamServiceOptions teamServiceOptions;
-
-        private readonly ILogger logger;
-
-        private HttpClient httpClient;
+        protected readonly ILogger _logger;
+        protected readonly HttpClient _httpClient;
 
         public HttpTeamServiceClient(ILogger<HttpTeamServiceClient> logger,
-            IOptions<TeamServiceOptions> serviceOptions)
+                                     IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
-            this.teamServiceOptions = serviceOptions.Value;
+            _logger = logger;
+            _httpClient = httpClientFactory.CreateClient("TeamAPI");
 
-            logger.LogInformation("Team Service HTTP client using URL {0}",
-                teamServiceOptions.Url);
-
-            httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(teamServiceOptions.Url);
+            _logger.LogInformation("Team Service HTTP client using URL {0}", _httpClient.BaseAddress.AbsoluteUri);
         }
 
         public Team GetTeam(Guid teamId)
         {
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = httpClient.GetAsync(String.Format("/teams/{0}", teamId)).Result;
+            var response = _httpClient.GetAsync(String.Format("/teams/{0}", teamId)).Result;
 
             Team teamResponse = null;
             if (response.IsSuccessStatusCode)
@@ -46,10 +39,10 @@ namespace TeamMonitoring.ProximityMonitor.TeamService
 
         public Member GetMember(Guid teamId, Guid memberId)
         {
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = httpClient.GetAsync(String.Format("/teams/{0}/members/{1}", teamId, memberId)).Result;
+            var response = _httpClient.GetAsync(String.Format("/teams/{0}/members/{1}", teamId, memberId)).Result;
 
             Member memberResponse = null;
             if (response.IsSuccessStatusCode)

@@ -7,17 +7,16 @@ namespace TeamMonitoring.RealityService.Location.Redis
 {
     public class RedisLocationCache : ILocationCache
     {
-        private ILogger logger;
-
-        private IConnectionMultiplexer connection;
+        protected readonly ILogger _logger;
+        protected readonly IConnectionMultiplexer _connection;
 
         public RedisLocationCache(ILogger<RedisLocationCache> logger,
-            IConnectionMultiplexer connectionMultiplexer)
+                                  IConnectionMultiplexer connectionMultiplexer)
         {
-            this.logger = logger;
-            this.connection = connectionMultiplexer;
+            _logger = logger;
+            _connection = connectionMultiplexer;
 
-            logger.LogInformation($"Using redis location cache - {connectionMultiplexer.Configuration}");
+            _logger.LogInformation($"Using redis location cache - {connectionMultiplexer.Configuration}");
         }
 
         public RedisLocationCache(ILogger<RedisLocationCache> logger,
@@ -28,7 +27,7 @@ namespace TeamMonitoring.RealityService.Location.Redis
 
         public IList<MemberLocation> GetMemberLocations(Guid teamId)
         {
-            IDatabase db = connection.GetDatabase();
+            IDatabase db = _connection.GetDatabase();
 
             RedisValue[] vals = db.HashValues(teamId.ToString());
 
@@ -37,14 +36,14 @@ namespace TeamMonitoring.RealityService.Location.Redis
 
         public void Put(Guid teamId, MemberLocation memberLocation)
         {
-            IDatabase db = connection.GetDatabase();
+            IDatabase db = _connection.GetDatabase();
 
             db.HashSet(teamId.ToString(), memberLocation.MemberID.ToString(), memberLocation.ToJsonString());
         }
 
         public MemberLocation Get(Guid teamId, Guid memberId)
         {
-            IDatabase db = connection.GetDatabase();
+            IDatabase db = _connection.GetDatabase();
 
             var value = (string)db.HashGet(teamId.ToString(), memberId.ToString());
             MemberLocation ml = MemberLocation.FromJsonString(value);

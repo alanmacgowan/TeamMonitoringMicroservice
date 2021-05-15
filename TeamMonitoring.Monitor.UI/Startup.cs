@@ -21,7 +21,6 @@ namespace TeamMonitoring.Monitor.UI
         {
             services.Configure<HubOptions>(Configuration.GetSection("HubOptions"));
 
-
             services.AddControllersWithViews();
         }
 

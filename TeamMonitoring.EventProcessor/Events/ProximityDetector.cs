@@ -13,13 +13,12 @@ namespace TeamMonitoring.EventProcessor.Events
          * non-team-mates must be filtered out before using this method.
          * distance threshold is in Kilometers.
          */
-        public ICollection<ProximityDetectedEvent> DetectProximityEvents(
-            MemberLocationRecordedEvent memberLocationEvent,
-            ICollection<MemberLocation> memberLocations,
-            double distanceThreshold)
+        public ICollection<ProximityDetectedEvent> DetectProximityEvents(MemberLocationRecordedEvent memberLocationEvent,
+                                                                         ICollection<MemberLocation> memberLocations,
+                                                                         double distanceThreshold)
         {
-            GpsUtility gpsUtility = new GpsUtility();
-            GpsCoordinate sourceCoordinate = new GpsCoordinate()
+            var gpsUtility = new GpsUtility();
+            var sourceCoordinate = new GpsCoordinate()
             {
                 Latitude = memberLocationEvent.Latitude,
                 Longitude = memberLocationEvent.Longitude
