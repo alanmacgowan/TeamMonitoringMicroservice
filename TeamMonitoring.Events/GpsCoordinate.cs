@@ -1,4 +1,4 @@
-namespace TeamMonitoring.ProximityMonitor.Location
+namespace TeamMonitoring.Events
 {
     public class GpsCoordinate
     {

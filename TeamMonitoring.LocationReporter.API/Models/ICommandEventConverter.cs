@@ -1,4 +1,4 @@
-using TeamMonitoring.LocationReporter.API.Events;
+using TeamMonitoring.Events;
 
 namespace TeamMonitoring.LocationReporter.API.Models
 {

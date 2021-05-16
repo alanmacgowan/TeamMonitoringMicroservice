@@ -1,9 +1,8 @@
 using Newtonsoft.Json;
 using System;
 using TeamMonitoring.Common.Queues;
-using TeamMonitoring.EventProcessor.Location;
 
-namespace TeamMonitoring.EventProcessor.Events
+namespace TeamMonitoring.Events
 {
     public class ProximityDetectedEvent : IEvent<ProximityDetectedEvent>
     {

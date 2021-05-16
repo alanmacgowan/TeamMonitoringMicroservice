@@ -21,6 +21,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\TeamMonitoring.Common\TeamMonitoring.Common.csproj" />
+    <ProjectReference Include="..\TeamMonitoring.Events\TeamMonitoring.Events.csproj" />
   </ItemGroup>
   
   <ItemGroup>

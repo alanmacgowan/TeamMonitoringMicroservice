@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client.Events;
 using TeamMonitoring.Common.HttpClient;
 using TeamMonitoring.Common.Queues;
-using TeamMonitoring.ProximityMonitor.Events;
 using TeamMonitoring.ProximityMonitor.Realtime;
 using TeamMonitoring.ProximityMonitor.TeamService;
 using TeamMonitoring.ProximityMonitor.Processor;

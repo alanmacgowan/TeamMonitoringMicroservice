@@ -23,7 +23,7 @@ namespace TeamMonitoring.ProximityMonitor.TeamService
 
         public async Task<Team> GetTeam(Guid teamId)
         {
-            var response = await _httpClient.GetAsync($"/teams/{teamId}"));
+            var response = await _httpClient.GetAsync($"/teams/{teamId}");
 
             Team teamResponse = null;
             if (response.IsSuccessStatusCode)

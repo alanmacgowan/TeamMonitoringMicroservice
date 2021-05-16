@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using System;
 using TeamMonitoring.Common.Queues;
 
-namespace TeamMonitoring.EventProcessor.Events
+namespace TeamMonitoring.Events
 {
     public class MemberLocationRecordedEvent : IEvent<MemberLocationRecordedEvent>
     {
@@ -24,5 +24,4 @@ namespace TeamMonitoring.EventProcessor.Events
             return JsonConvert.DeserializeObject<MemberLocationRecordedEvent>(jsonBody);
         }
     }
-
 }

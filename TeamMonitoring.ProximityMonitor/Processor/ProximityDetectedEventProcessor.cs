@@ -8,7 +8,7 @@ using TeamMonitoring.Common.Queues;
 using TeamMonitoring.ProximityMonitor.Realtime;
 using TeamMonitoring.ProximityMonitor.TeamService;
 using TeamMonitoring.Common.Processor;
-using TeamMonitoring.ProximityMonitor.Events;
+using TeamMonitoring.Events;
 
 namespace TeamMonitoring.ProximityMonitor.Processor
 {

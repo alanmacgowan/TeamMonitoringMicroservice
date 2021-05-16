@@ -1,4 +1,5 @@
 using System;
+using TeamMonitoring.Events;
 
 namespace TeamMonitoring.EventProcessor.Location
 {

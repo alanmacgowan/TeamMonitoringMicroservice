@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.EventProcessor.Location;
 using TeamMonitoring.Common.Processor;
-using TeamMonitoring.EventProcessor.Events;
+using TeamMonitoring.Events;
 
 namespace TeamMonitoring.EventProcessor.Processor
 {

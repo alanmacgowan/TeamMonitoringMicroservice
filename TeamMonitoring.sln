@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.RealityServi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.Common", "TeamMonitoring.Common\TeamMonitoring.Common.csproj", "{A2298D12-D77A-4114-B55C-2A9EFDFAB487}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.Events", "TeamMonitoring.Events\TeamMonitoring.Events.csproj", "{3E47C783-C2A8-4FB1-803A-6122775A9698}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{A2298D12-D77A-4114-B55C-2A9EFDFAB487}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2298D12-D77A-4114-B55C-2A9EFDFAB487}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2298D12-D77A-4114-B55C-2A9EFDFAB487}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E47C783-C2A8-4FB1-803A-6122775A9698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E47C783-C2A8-4FB1-803A-6122775A9698}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E47C783-C2A8-4FB1-803A-6122775A9698}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E47C783-C2A8-4FB1-803A-6122775A9698}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

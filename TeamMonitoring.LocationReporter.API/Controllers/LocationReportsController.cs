@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using TeamMonitoring.Common.Queues;
-using TeamMonitoring.LocationReporter.API.Events;
+using TeamMonitoring.Events;
 using TeamMonitoring.LocationReporter.API.Models;
 using TeamMonitoring.LocationReporter.API.Services;
 using System.Threading.Tasks;

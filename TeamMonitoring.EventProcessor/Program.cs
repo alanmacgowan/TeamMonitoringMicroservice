@@ -3,7 +3,6 @@ using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client.Events;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.Common.Redis;
-using TeamMonitoring.EventProcessor.Events;
 using TeamMonitoring.EventProcessor.Location;
 using TeamMonitoring.EventProcessor.Location.Redis;
 using TeamMonitoring.EventProcessor.Processor;

@@ -1,4 +1,4 @@
-using TeamMonitoring.ProximityMonitor.Events;
+using TeamMonitoring.Events;
 
 namespace TeamMonitoring.ProximityMonitor.Realtime
 {
