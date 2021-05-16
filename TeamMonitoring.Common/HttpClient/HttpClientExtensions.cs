@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Net.Http.Headers;
 
 namespace TeamMonitoring.Common.HttpClient
 {
@@ -12,6 +13,7 @@ namespace TeamMonitoring.Common.HttpClient
                 client.BaseAddress = new Uri(url);
                 client.Timeout = new TimeSpan(0, 0, 30);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             });
 
             return services;

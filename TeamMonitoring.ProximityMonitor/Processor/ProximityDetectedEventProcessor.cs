@@ -7,28 +7,30 @@ using System.Threading.Tasks;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.ProximityMonitor.Realtime;
 using TeamMonitoring.ProximityMonitor.TeamService;
+using TeamMonitoring.Common.Processor;
+using TeamMonitoring.ProximityMonitor.Events;
 
-namespace TeamMonitoring.ProximityMonitor.Events
+namespace TeamMonitoring.ProximityMonitor.Processor
 {
     public class ProximityDetectedEventProcessor : BackgroundService, IEventProcessor
     {
         private ILogger _logger;
         private ITeamServiceClient _teamClient;
-        private IEventSubscriber<ProximityDetectedEvent> _subscriber;
-        private IHubContext<TeamMonitoringHub, ITeamMonitoringHub> _monitoringHub;
+        private IEventSubscriber<ProximityDetectedEvent> _eventSubscriber;
+        private IHubContext<TeamMonitoringHub, ITeamMonitoringHub> _notificationgHub;
 
         public ProximityDetectedEventProcessor(ILogger<ProximityDetectedEventProcessor> logger,
-                                               IEventSubscriber<ProximityDetectedEvent> subscriber,
+                                               IEventSubscriber<ProximityDetectedEvent> eventSubscriber,
                                                ITeamServiceClient teamClient,
-                                               IHubContext<TeamMonitoringHub, ITeamMonitoringHub> monitoringHub)
+                                               IHubContext<TeamMonitoringHub, ITeamMonitoringHub> notificationgHub)
         {
-            _monitoringHub = monitoringHub;
+            _notificationgHub = notificationgHub;
             _logger = logger;
-            _subscriber = subscriber;
+            _eventSubscriber = eventSubscriber;
             _teamClient = teamClient;
             _logger.LogInformation("Created Proximity Event Processor.");
 
-            _subscriber.EventReceived += async (pde) =>
+            _eventSubscriber.EventReceived += async (pde) =>
             {
                 await NotifyProximityDetectedRealtimeEvent(pde);
             };
@@ -38,9 +40,9 @@ namespace TeamMonitoring.ProximityMonitor.Events
 
         private async Task NotifyProximityDetectedRealtimeEvent(ProximityDetectedEvent pde)
         {
-            var team = _teamClient.GetTeam(pde.TeamID);
-            var sourceMember = _teamClient.GetMember(pde.TeamID, pde.SourceMemberID);
-            var targetMember = _teamClient.GetMember(pde.TeamID, pde.TargetMemberID);
+            var team = await _teamClient.GetTeam(pde.TeamID);
+            var sourceMember = await _teamClient.GetMember(pde.TeamID, pde.SourceMemberID);
+            var targetMember = await _teamClient.GetMember(pde.TeamID, pde.TargetMemberID);
 
             var outEvent = new ProximityDetectedRealtimeEvent
             {
@@ -55,7 +57,7 @@ namespace TeamMonitoring.ProximityMonitor.Events
                 SourceMemberName = $"{sourceMember.FirstName} {sourceMember.LastName}",
                 TargetMemberName = $"{targetMember.FirstName} {targetMember.LastName}"
             };
-            await _monitoringHub.Clients.All.ProximityDetectedNotification(outEvent);
+            await _notificationgHub.Clients.All.ProximityDetectedNotification(outEvent);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -69,12 +71,12 @@ namespace TeamMonitoring.ProximityMonitor.Events
 
         public void Start()
         {
-            _subscriber.Subscribe();
+            _eventSubscriber.Subscribe();
         }
 
         public void Stop()
         {
-            _subscriber.Unsubscribe();
+            _eventSubscriber.Unsubscribe();
         }
     }
 }

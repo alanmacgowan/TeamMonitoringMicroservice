@@ -1,9 +1,10 @@
 using System;
+using System.Threading.Tasks;
 
 namespace TeamMonitoring.LocationReporter.API.Services
 {
     public interface ITeamServiceClient
     {
-        Guid GetTeamForMember(Guid memberId);
+        Task<Guid> GetTeamForMember(Guid memberId);
     }
 }

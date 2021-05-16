@@ -6,7 +6,6 @@ using System.Text;
 
 namespace TeamMonitoring.Common.Queues
 {
-
     public class EventSubscriber<T> : IEventSubscriber<T>
     {
         public event Delegate<T> EventReceived;

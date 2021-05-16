@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace TeamMonitoring.LocationReporter.API.Services
 {
@@ -20,12 +20,9 @@ namespace TeamMonitoring.LocationReporter.API.Services
             _logger.LogInformation("Team Service HTTP client using URL {0}", _httpClient.BaseAddress.AbsoluteUri);
         }
 
-        public Guid GetTeamForMember(Guid memberId)
+        public async Task<Guid> GetTeamForMember(Guid memberId)
         {
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = _httpClient.GetAsync(String.Format("/members/{0}/team", memberId)).Result;
+            var response = await _httpClient.GetAsync($"/members/{memberId}/team");
 
             TeamIDResponse teamIdResponse;
             if (response.IsSuccessStatusCode)

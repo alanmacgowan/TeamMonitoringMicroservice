@@ -5,22 +5,22 @@ using System.Text;
 namespace TeamMonitoring.Common.Queues
 {
 
-    public class EventEmitter<T> : IEventEmitter<T> where T : IEvent<T>
+    public class EventPublisher<T> : IEventPublisher<T> where T : IEvent<T>
     {
         protected readonly string QUEUE_NAME = typeof(T).Name;
         protected readonly ILogger _logger;
         protected readonly IConnectionFactory _connectionFactory;
 
-        public EventEmitter(ILogger<EventEmitter<T>> logger,
-                            IConnectionFactory connectionFactory)
+        public EventPublisher(ILogger<EventPublisher<T>> logger,
+                              IConnectionFactory connectionFactory)
         {
             _logger = logger;
             _connectionFactory = connectionFactory;
 
-            _logger.LogInformation($"Emitting events on queue {QUEUE_NAME}");
+            _logger.LogInformation($"Publishing events on queue {QUEUE_NAME}");
         }
 
-        public void EmitEvent(T emmitEvent)
+        public void PublishEvent(T emmitEvent)
         {
             using (var conn = _connectionFactory.CreateConnection())
             {
@@ -33,6 +33,7 @@ namespace TeamMonitoring.Common.Queues
                         autoDelete: false,
                         arguments: null
                     );
+
                     var jsonPayload = emmitEvent.toJson();
                     var body = Encoding.UTF8.GetBytes(jsonPayload);
                     channel.BasicPublish(
@@ -41,7 +42,8 @@ namespace TeamMonitoring.Common.Queues
                         basicProperties: null,
                         body: body
                     );
-                    _logger.LogInformation($"Emitted proximity event of {jsonPayload.Length} bytes to queue.");
+
+                    _logger.LogInformation($"Published event of {jsonPayload.Length} bytes to queue.");
                 }
             }
         }

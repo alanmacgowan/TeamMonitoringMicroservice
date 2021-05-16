@@ -6,6 +6,7 @@ using TeamMonitoring.Common.Redis;
 using TeamMonitoring.EventProcessor.Events;
 using TeamMonitoring.EventProcessor.Location;
 using TeamMonitoring.EventProcessor.Location.Redis;
+using TeamMonitoring.EventProcessor.Processor;
 
 namespace TeamMonitoring.EventProcessor
 {
@@ -29,7 +30,7 @@ namespace TeamMonitoring.EventProcessor
                     services.AddSingleton<EventingBasicConsumer, AMQPEventingConsumer>();
                     services.AddSingleton<ILocationCache, RedisLocationCache>();
                     services.AddSingleton(typeof(IEventSubscriber<>), typeof(EventSubscriber<>));
-                    services.AddSingleton(typeof(IEventEmitter<>), typeof(EventEmitter<>));
+                    services.AddSingleton(typeof(IEventPublisher<>), typeof(EventPublisher<>));
 
                     services.AddHostedService<MemberLocationEventProcessor>();
                 });

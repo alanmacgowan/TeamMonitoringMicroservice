@@ -38,7 +38,7 @@ namespace TeamMonitoring.LocationReporter.API
             var teamServiceOptions = Configuration.GetSection("teamservice").Get<TeamServiceOptions>();
             services.AddHttpClientService("TeamAPI", teamServiceOptions.Url);
 
-            services.AddSingleton(typeof(IEventEmitter<>), typeof(EventEmitter<>));
+            services.AddSingleton(typeof(IEventPublisher<>), typeof(EventPublisher<>));
             services.AddSingleton<ICommandEventConverter, CommandEventConverter>();
             services.AddSingleton<ITeamServiceClient, HttpTeamServiceClient>();
         }

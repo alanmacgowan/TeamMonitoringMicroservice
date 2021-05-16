@@ -6,26 +6,28 @@ using System.Threading;
 using System.Threading.Tasks;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.EventProcessor.Location;
+using TeamMonitoring.Common.Processor;
+using TeamMonitoring.EventProcessor.Events;
 
-namespace TeamMonitoring.EventProcessor.Events
+namespace TeamMonitoring.EventProcessor.Processor
 {
     public class MemberLocationEventProcessor : BackgroundService, IEventProcessor
     {
         protected readonly ILogger _logger;
         protected readonly IEventSubscriber<MemberLocationRecordedEvent> _eventSubscriber;
-        protected readonly IEventEmitter<ProximityDetectedEvent> _eventEmitter;
+        protected readonly IEventPublisher<ProximityDetectedEvent> _eventPublisher;
         protected readonly ProximityDetector _proximityDetector;
         protected readonly ILocationCache _locationCache;
 
         public MemberLocationEventProcessor(ILogger<MemberLocationEventProcessor> logger,
                                             IEventSubscriber<MemberLocationRecordedEvent> eventSubscriber,
-                                            IEventEmitter<ProximityDetectedEvent> eventEmitter,
+                                            IEventPublisher<ProximityDetectedEvent> eventPublisher,
                                             ILocationCache locationCache
         )
         {
             _logger = logger;
             _eventSubscriber = eventSubscriber;
-            _eventEmitter = eventEmitter;
+            _eventPublisher = eventPublisher;
             _proximityDetector = new ProximityDetector();
             _locationCache = locationCache;
 
@@ -37,7 +39,7 @@ namespace TeamMonitoring.EventProcessor.Events
                 ICollection<ProximityDetectedEvent> proximityEvents = _proximityDetector.DetectProximityEvents(mlre, memberLocations, 30.0f);
                 foreach (var proximityEvent in proximityEvents)
                 {
-                    _eventEmitter.EmitEvent(proximityEvent);
+                    _eventPublisher.PublishEvent(proximityEvent);
                 }
 
                 _locationCache.Put(mlre.TeamID, new MemberLocation

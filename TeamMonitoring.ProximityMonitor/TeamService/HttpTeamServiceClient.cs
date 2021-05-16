@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace TeamMonitoring.ProximityMonitor.TeamService
 {
@@ -20,12 +21,9 @@ namespace TeamMonitoring.ProximityMonitor.TeamService
             _logger.LogInformation("Team Service HTTP client using URL {0}", _httpClient.BaseAddress.AbsoluteUri);
         }
 
-        public Team GetTeam(Guid teamId)
+        public async Task<Team> GetTeam(Guid teamId)
         {
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var response = _httpClient.GetAsync(String.Format("/teams/{0}", teamId)).Result;
+            var response = await _httpClient.GetAsync($"/teams/{teamId}"));
 
             Team teamResponse = null;
             if (response.IsSuccessStatusCode)
@@ -36,12 +34,9 @@ namespace TeamMonitoring.ProximityMonitor.TeamService
             return teamResponse;
         }
 
-        public Member GetMember(Guid teamId, Guid memberId)
+        public async Task<Member> GetMember(Guid teamId, Guid memberId)
         {
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var response = _httpClient.GetAsync(String.Format("/teams/{0}/members/{1}", teamId, memberId)).Result;
+            var response = await _httpClient.GetAsync($"/teams/{teamId}/members/{memberId}");
 
             Member memberResponse = null;
             if (response.IsSuccessStatusCode)

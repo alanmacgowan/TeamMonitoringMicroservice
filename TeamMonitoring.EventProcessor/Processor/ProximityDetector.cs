@@ -2,17 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TeamMonitoring.EventProcessor.Location;
+using TeamMonitoring.EventProcessor.Events;
 
-namespace TeamMonitoring.EventProcessor.Events
+namespace TeamMonitoring.EventProcessor.Processor
 {
     public class ProximityDetector
     {
-        /*
-         * This method assumes that the memberLocations collection only 
-         * applies to members applicable for proximity detection. In other words,
-         * non-team-mates must be filtered out before using this method.
-         * distance threshold is in Kilometers.
-         */
         public ICollection<ProximityDetectedEvent> DetectProximityEvents(MemberLocationRecordedEvent memberLocationEvent,
                                                                          ICollection<MemberLocation> memberLocations,
                                                                          double distanceThreshold)

@@ -1,4 +1,4 @@
-namespace TeamMonitoring.EventProcessor.Events
+namespace TeamMonitoring.Common.Processor
 {
     public interface IEventProcessor
     {

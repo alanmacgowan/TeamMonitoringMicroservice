@@ -1,10 +1,11 @@
 using System;
+using System.Threading.Tasks;
 
 namespace TeamMonitoring.ProximityMonitor.TeamService
 {
     public interface ITeamServiceClient
     {
-        Team GetTeam(Guid teamId);
-        Member GetMember(Guid teamId, Guid memberId);
+        Task<Team> GetTeam(Guid teamId);
+        Task<Member> GetMember(Guid teamId, Guid memberId);
     }
 }
