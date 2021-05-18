@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@microsoft/signalr": "^5.0.6"
+    "@microsoft/signalr": "^5.0.6",
+    "bootstrap": "^5.0.1",
+    "toastr": "^2.1.4"
   }
 }

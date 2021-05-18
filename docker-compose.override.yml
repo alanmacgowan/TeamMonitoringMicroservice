@@ -23,7 +23,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - PORT=80
-      - HubOptions__HubUrl=http://proximitymonitor
+      - HubOptions__HubUrl=http://localhost:5102
     ports:
       - "5101:80"
 

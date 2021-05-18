@@ -7,6 +7,7 @@ setupConnection = () => {
         .build();
 
     connection.on("ProximityDetectedNotification", (event) => {
+        toastr.success('New Proximity detected: ' + event.sourceMemberName + ' - ' + event.targetMemberName);
         const statusDiv = document.getElementById("status");
         statusDiv.innerHTML += '<div> Team: ' + event.teamName + ' - Source: '  + event.sourceMemberName + ' - Target: ' + event.targetMemberName + '</div>';       
     }
