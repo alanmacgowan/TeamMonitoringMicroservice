@@ -15,11 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.Monitor.UI",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.ProximityMonitor", "TeamMonitoring.ProximityMonitor\TeamMonitoring.ProximityMonitor.csproj", "{5284E7D4-9929-4E93-A43D-2DAE31A4EFEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.RealityService.API", "TeamMonitoring.RealityService.API\TeamMonitoring.RealityService.API.csproj", "{3595D90A-52DD-42F3-9C7E-6308E52C3467}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.RealityService.API", "TeamMonitoring.RealityService.API\TeamMonitoring.RealityService.API.csproj", "{3595D90A-52DD-42F3-9C7E-6308E52C3467}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.Common", "TeamMonitoring.Common\TeamMonitoring.Common.csproj", "{A2298D12-D77A-4114-B55C-2A9EFDFAB487}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.Common", "TeamMonitoring.Common\TeamMonitoring.Common.csproj", "{A2298D12-D77A-4114-B55C-2A9EFDFAB487}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.Events", "TeamMonitoring.Events\TeamMonitoring.Events.csproj", "{3E47C783-C2A8-4FB1-803A-6122775A9698}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamMonitoring.Events", "TeamMonitoring.Events\TeamMonitoring.Events.csproj", "{3E47C783-C2A8-4FB1-803A-6122775A9698}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{593759BB-B72E-4122-AF00-8235BA70C011}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.override.yml = docker-compose.override.yml
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

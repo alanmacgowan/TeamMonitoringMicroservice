@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Reflection;
 using TeamMonitoring.TeamService.API.Persistence;
 using TeamMonitoring.TeamService.TeamService.API.Persistence;
 
@@ -23,7 +25,19 @@ namespace TeamMonitoring.TeamService.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<TeamDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<TeamDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddEntityFrameworkSqlServer()
+                    .AddDbContext<TeamDbContext>(options =>
+                    {
+                       options.UseSqlServer(Configuration["DefaultConnection"], sqlServerOptionsAction: sqlOptions =>
+                                        {
+                                            sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                                            sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                                        });
+                    });
+
+
             services.AddScoped<ITeamRepository, TeamRepository>();
 
             services.AddControllers();

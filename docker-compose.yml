@@ -1,0 +1,72 @@
+
+version: "3.8"
+
+services: 
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+    container_name: sqldata
+    volumes:
+      - sqldata:/var/opt/mssql
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    volumes:
+     - redisdata:/var/lib/redis
+    environment:
+     - REDIS_REPLICATION_MODE=master
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+    hostname: rabbitmq
+
+  monitor-ui:
+    container_name: monitor-ui
+    build:
+      context: .
+      dockerfile: TeamMonitoring.Monitor.UI/Dockerfile
+    depends_on:
+      - proximitymonitor
+
+  proximitymonitor:
+    container_name: proximitymonitor
+    build:
+      context: .
+      dockerfile: TeamMonitoring.ProximityMonitor/Dockerfile
+    depends_on:
+      - teamservice-api
+      - rabbitmq
+
+  locationreporter-api:
+    container_name: locationreporter-api
+    build:
+      context: .
+      dockerfile: TeamMonitoring.LocationReporter.API/Dockerfile
+    depends_on:
+      - teamservice-api
+      - rabbitmq
+
+  eventprocessor:
+    container_name: eventprocessor
+    build:
+      context: .
+      dockerfile: TeamMonitoring.EventProcessor/Dockerfile
+    depends_on:
+      - redis
+      - rabbitmq
+
+  teamservice-api:
+    container_name: teamservice-api
+    build:
+      context: .
+      dockerfile: TeamMonitoring.TeamService.API/Dockerfile
+    depends_on:
+      - sqldata
+
+volumes:
+  sqldata:
+  redisdata:
+  rabbitmqdata:

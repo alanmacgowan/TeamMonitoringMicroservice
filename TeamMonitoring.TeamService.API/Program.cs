@@ -26,7 +26,8 @@ namespace TeamMonitoring.TeamService.API
                 try
                 {
                     var context = services.GetRequiredService<TeamDbContext>();
-                    DatabaseInitializer.Initialize(context);
+                    var logger = services.GetService<ILogger<TeamDbContextSeed>>();
+                    new TeamDbContextSeed().SeedAsync(context, logger).Wait();
                 }
                 catch (Exception ex)
                 {

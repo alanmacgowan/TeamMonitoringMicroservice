@@ -1,0 +1,72 @@
+
+version: "3.8"
+
+services: 
+  sqldata:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
+
+  redis:
+    ports:
+     - "6379:6379"
+
+  rabbitmq:
+    ports: 
+      - 5672:5672
+      - 15672:15672
+
+  monitor-ui:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PORT=80
+      - HubOptions__HubUrl=http://proximitymonitor
+    ports:
+      - "5101:80"
+
+  proximitymonitor:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PORT=80
+      - teamservice__url=http://teamservice-api
+      - amqp__username=guest
+      - amqp__password=guest
+      - amqp__virtualhost=/
+      - amqp__uri=amqp://rabbitmq
+    ports:
+      - "5102:80"
+
+  locationreporter-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PORT=80
+      - teamservice__url=http://teamservice-api
+      - amqp__username=guest
+      - amqp__password=guest
+      - amqp__virtualhost=/
+      - amqp__uri=amqp://rabbitmq
+    ports:
+      - "5104:80"
+
+  eventprocessor:
+    environment:
+      - amqp__username=guest
+      - amqp__password=guest
+      - amqp__virtualhost=/
+      - amqp__uri=amqp://rabbitmq
+      - redis__configstring=redis
+
+  teamservice-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PORT=80
+      - ConnectionStrings__DefaultConnection=Server=sqldata;Database=TeamMonitoring.TeamsDB;User Id=sa;Password=Pass@word;
+    ports:
+      - "5103:80"
+

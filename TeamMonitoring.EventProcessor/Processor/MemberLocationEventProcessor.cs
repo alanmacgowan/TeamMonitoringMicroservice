@@ -31,6 +31,13 @@ namespace TeamMonitoring.EventProcessor.Processor
             _proximityDetector = new ProximityDetector();
             _locationCache = locationCache;
 
+            Start();
+
+            HandleEvent();
+        }
+
+        public void HandleEvent()
+        {
             _eventSubscriber.EventReceived += (mlre) =>
             {
                 _logger.LogInformation($"MemberLocationRecordedEvent Received: {mlre.MemberID}");
@@ -52,8 +59,6 @@ namespace TeamMonitoring.EventProcessor.Processor
                     }
                 });
             };
-
-            Start();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

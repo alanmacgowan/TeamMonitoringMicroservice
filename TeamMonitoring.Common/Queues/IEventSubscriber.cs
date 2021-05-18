@@ -1,3 +1,4 @@
+using System;
 
 namespace TeamMonitoring.Common.Queues
 {
