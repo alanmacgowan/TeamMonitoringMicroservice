@@ -2,16 +2,24 @@
 version: "3.8"
 
 services: 
+  prometheus:
+    ports: 
+     - 9090:9090
+
+  grafana:
+    ports:
+     - 3000:3000
+
   sqldata:
     environment:
       - SA_PASSWORD=Pass@word
       - ACCEPT_EULA=Y
     ports:
-      - "5433:1433"
+      - 5433:1433
 
   redis:
     ports:
-     - "6379:6379"
+     - 6379:6379
 
   rabbitmq:
     ports: 
@@ -25,7 +33,7 @@ services:
       - PORT=80
       - HubOptions__HubUrl=http://localhost:5102
     ports:
-      - "5101:80"
+      - 5101:80
 
   proximitymonitor:
     environment:
@@ -38,7 +46,7 @@ services:
       - amqp__virtualhost=/
       - amqp__uri=amqp://rabbitmq
     ports:
-      - "5102:80"
+      - 5102:80
 
   locationreporter-api:
     environment:
@@ -51,7 +59,7 @@ services:
       - amqp__virtualhost=/
       - amqp__uri=amqp://rabbitmq
     ports:
-      - "5104:80"
+      - 5104:80
 
   eventprocessor:
     environment:
@@ -68,5 +76,5 @@ services:
       - PORT=80
       - ConnectionStrings__DefaultConnection=Server=sqldata;Database=TeamMonitoring.TeamsDB;User Id=sa;Password=Pass@word;
     ports:
-      - "5103:80"
+      - 5103:80
 

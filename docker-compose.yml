@@ -2,6 +2,14 @@
 version: "3.8"
 
 services: 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+
   sqldata:
     image: mcr.microsoft.com/mssql/server:2019-latest 
     container_name: sqldata

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Prometheus;
 using TeamMonitoring.Common.HttpClient;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.LocationReporter.API.Models;
@@ -59,10 +60,15 @@ namespace TeamMonitoring.LocationReporter.API
 
             app.UseAuthorization();
 
+            app.UseMetricServer();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.UseHttpMetrics();
+
         }
     }
 }
