@@ -3,11 +3,11 @@ version: "3.8"
 
 services: 
   prometheus:
-    image: prom/prometheus
+    build: ./docker/prometheus
     container_name: prometheus
 
   grafana:
-    image: grafana/grafana
+    build: ./docker/grafana
     container_name: grafana
 
   sqldata:

@@ -58,16 +58,15 @@ namespace TeamMonitoring.LocationReporter.API
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseMetricServer();
+            app.UseHttpMetrics();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            app.UseHttpMetrics();
 
         }
     }
