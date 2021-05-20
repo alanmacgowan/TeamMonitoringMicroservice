@@ -33,4 +33,4 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ['locationreporter-api']
+      - targets: ['locationreporter-api', 'monitor-ui', 'teamservice-api']

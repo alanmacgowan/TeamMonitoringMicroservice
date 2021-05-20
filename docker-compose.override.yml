@@ -74,7 +74,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - PORT=80
-      - ConnectionStrings__DefaultConnection=Server=sqldata;Database=TeamMonitoring.TeamsDB;User Id=sa;Password=Pass@word;
+      - DefaultConnection=Server=sqldata;Database=TeamMonitoring.TeamsDB;User Id=sa;Password=Pass@word;
     ports:
       - 5103:80
 

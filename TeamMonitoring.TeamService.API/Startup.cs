@@ -9,6 +9,7 @@ using System;
 using System.Reflection;
 using TeamMonitoring.TeamService.API.Persistence;
 using TeamMonitoring.TeamService.TeamService.API.Persistence;
+using Prometheus;
 
 namespace TeamMonitoring.TeamService.API
 {
@@ -61,6 +62,9 @@ namespace TeamMonitoring.TeamService.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMetricServer();
+            app.UseHttpMetrics();
 
             app.UseAuthorization();
 

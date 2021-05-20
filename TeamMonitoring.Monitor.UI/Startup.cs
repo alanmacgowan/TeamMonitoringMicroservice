@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeamMonitoring.Monitor.UI.Models;
+using Prometheus;
+
 
 namespace TeamMonitoring.Monitor.UI
 {
@@ -41,6 +43,9 @@ namespace TeamMonitoring.Monitor.UI
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseMetricServer();
+            app.UseHttpMetrics();
 
             app.UseAuthorization();
 

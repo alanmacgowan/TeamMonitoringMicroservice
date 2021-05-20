@@ -22,11 +22,6 @@ namespace TeamMonitoring.Monitor.UI.Controllers
             return View(new ProximityEventsViewModel { HubUrl = _hubOptions.HubUrl });
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

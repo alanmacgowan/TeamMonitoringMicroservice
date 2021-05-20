@@ -37,6 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prometheus", "Prometheus", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grafana", "Grafana", "{9190AC30-CE71-4746-B9D9-86872BBBA591}"
 	ProjectSection(SolutionItems) = preProject
+		Docker\Grafana\asp-net-core-controller-summary-prometheus_rev4.json = Docker\Grafana\asp-net-core-controller-summary-prometheus_rev4.json
 		Docker\Grafana\Dockerfile = Docker\Grafana\Dockerfile
 		Docker\Grafana\prometheus.yaml = Docker\Grafana\prometheus.yaml
 		Docker\Grafana\prometheus_dashboard.json = Docker\Grafana\prometheus_dashboard.json
