@@ -9,6 +9,7 @@ using TeamMonitoring.Common.Queues;
 using TeamMonitoring.ProximityMonitor.Realtime;
 using TeamMonitoring.ProximityMonitor.TeamService;
 using TeamMonitoring.ProximityMonitor.Processor;
+using Prometheus;
 
 namespace TeamMonitoring.ProximityMonitor
 {
@@ -61,6 +62,9 @@ namespace TeamMonitoring.ProximityMonitor
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMetricServer();
+            app.UseHttpMetrics();
 
             app.UseAuthorization();
 

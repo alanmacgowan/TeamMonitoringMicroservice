@@ -9,6 +9,7 @@ using TeamMonitoring.ProximityMonitor.Realtime;
 using TeamMonitoring.ProximityMonitor.TeamService;
 using TeamMonitoring.Common.Processor;
 using TeamMonitoring.Events;
+using Prometheus;
 
 namespace TeamMonitoring.ProximityMonitor.Processor
 {
@@ -18,6 +19,7 @@ namespace TeamMonitoring.ProximityMonitor.Processor
         private ITeamServiceClient _teamClient;
         private IEventSubscriber<ProximityDetectedEvent> _eventSubscriber;
         private IHubContext<TeamMonitoringHub, ITeamMonitoringHub> _notificationgHub;
+        private static readonly Counter ProcessedEventsCount = Metrics.CreateCounter("proximity_detected_events_processed_total", "Number of ProximityDetectedEvent events processed.");
 
         public ProximityDetectedEventProcessor(ILogger<ProximityDetectedEventProcessor> logger,
                                                IEventSubscriber<ProximityDetectedEvent> eventSubscriber,
@@ -32,6 +34,7 @@ namespace TeamMonitoring.ProximityMonitor.Processor
 
             _eventSubscriber.EventReceived += async (pde) =>
             {
+                ProcessedEventsCount.Inc();
                 await NotifyProximityDetectedRealtimeEvent(pde);
             };
 

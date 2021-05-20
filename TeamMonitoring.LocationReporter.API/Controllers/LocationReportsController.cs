@@ -5,6 +5,7 @@ using TeamMonitoring.Events;
 using TeamMonitoring.LocationReporter.API.Models;
 using TeamMonitoring.LocationReporter.API.Services;
 using System.Threading.Tasks;
+using Prometheus;
 
 namespace TeamMonitoring.LocationReporter.API.Controllers
 {
@@ -14,6 +15,7 @@ namespace TeamMonitoring.LocationReporter.API.Controllers
         private ICommandEventConverter _eventConverter;
         private IEventPublisher<MemberLocationRecordedEvent> _eventPublisher;
         private ITeamServiceClient _teamServiceClient;
+        private static readonly Counter PublishedEventsCount = Metrics.CreateCounter("memberlocation_recorded_events_processed_total", "Number of MemberLocationRecordedEvent events published.");
 
 
         public LocationReportsController(ICommandEventConverter eventConverter,
@@ -31,6 +33,7 @@ namespace TeamMonitoring.LocationReporter.API.Controllers
             MemberLocationRecordedEvent locationRecordedEvent = _eventConverter.CommandToEvent(locationReport);
             locationRecordedEvent.TeamID = await _teamServiceClient.GetTeamForMember(locationReport.MemberID);
             _eventPublisher.PublishEvent(locationRecordedEvent);
+            PublishedEventsCount.Inc();
 
             return Created($"/api/members/{memberId}/locationreports/{locationReport.ReportID}", locationReport);
         }
