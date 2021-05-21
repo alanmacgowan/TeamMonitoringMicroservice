@@ -2,22 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>3542590e-c59c-4647-a6aa-257f344b0564</UserSecretsId>
+    <UserSecretsId>ec1dfee5-a2d0-454b-b53f-faf7c03ba243</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="temp\" />
-    <Folder Include="wwwroot\lib\signalr\" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="5.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="5.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="5.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="5.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
-    <PackageReference Include="prometheus-net" Version="4.1.1" />
-    <PackageReference Include="prometheus-net.AspNetCore" Version="4.1.1" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

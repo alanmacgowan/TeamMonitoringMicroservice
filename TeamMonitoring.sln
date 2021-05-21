@@ -44,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grafana", "Grafana", "{9190
 		Docker\Grafana\prometheus_dashboard.yaml = Docker\Grafana\prometheus_dashboard.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamMonitoring.WebStatus", "TeamMonitoring.WebStatus\TeamMonitoring.WebStatus.csproj", "{1FC50933-A5FC-4988-B965-ADC687E3D555}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,10 @@ Global
 		{3E47C783-C2A8-4FB1-803A-6122775A9698}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E47C783-C2A8-4FB1-803A-6122775A9698}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E47C783-C2A8-4FB1-803A-6122775A9698}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC50933-A5FC-4988-B965-ADC687E3D555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC50933-A5FC-4988-B965-ADC687E3D555}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC50933-A5FC-4988-B965-ADC687E3D555}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC50933-A5FC-4988-B965-ADC687E3D555}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

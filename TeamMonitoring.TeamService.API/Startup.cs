@@ -10,6 +10,9 @@ using System.Reflection;
 using TeamMonitoring.TeamService.API.Persistence;
 using TeamMonitoring.TeamService.TeamService.API.Persistence;
 using Prometheus;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace TeamMonitoring.TeamService.API
 {
@@ -38,6 +41,8 @@ namespace TeamMonitoring.TeamService.API
                                         });
                     });
 
+            services.AddHealthChecks()
+                    .AddSqlServer(Configuration["DefaultConnection"], name: "Teams Database", failureStatus: HealthStatus.Degraded);
 
             services.AddScoped<ITeamRepository, TeamRepository>();
 
@@ -71,6 +76,10 @@ namespace TeamMonitoring.TeamService.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+                {
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
     }
