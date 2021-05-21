@@ -21,8 +21,6 @@ services:
     container_name: redis
     volumes:
      - redisdata:/var/lib/redis
-    environment:
-     - REDIS_REPLICATION_MODE=master
 
   rabbitmq:
     image: rabbitmq:management
@@ -73,6 +71,18 @@ services:
       dockerfile: TeamMonitoring.TeamService.API/Dockerfile
     depends_on:
       - sqldata
+
+  webstatus:
+    container_name: webstatus
+    build:
+      context: .
+      dockerfile: TeamMonitoring.WebStatus/Dockerfile
+    depends_on:
+      - teamservice-api
+      - locationreporter-api
+      - proximitymonitor
+      - monitor-ui
+      - eventprocessor
 
 volumes:
   sqldata:

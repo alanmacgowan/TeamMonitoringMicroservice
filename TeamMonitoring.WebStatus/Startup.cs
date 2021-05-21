@@ -66,7 +66,7 @@ namespace TeamMonitoring.WebStatus
                 });
                 endpoints.MapHealthChecksUI(setup =>
                 {
-                    setup.AddCustomStylesheet("dotnet.css");
+                    //setup.AddCustomStylesheet(Configuration["ui_stylesheet"]);
                 });
             });
         }

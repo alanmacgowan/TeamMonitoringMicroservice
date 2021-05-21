@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\dotnet.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="5.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
@@ -16,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <None Include="wwwroot\css\dotnet.css" />
   </ItemGroup>
 
 </Project>
