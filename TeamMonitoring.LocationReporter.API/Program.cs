@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
+using TeamMonitoring.Common.Logging;
 
 namespace TeamMonitoring.LocationReporter.API
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -12,9 +15,12 @@ namespace TeamMonitoring.LocationReporter.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .AddLogging(Assembly.GetExecutingAssembly().GetName().Name)
                 .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                 {
+                     webBuilder.UseStartup<Startup>();
+                 });
+
     }
+
 }

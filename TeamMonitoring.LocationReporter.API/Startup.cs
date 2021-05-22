@@ -6,11 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Prometheus;
 using System;
 using System.Net.Http;
 using TeamMonitoring.Common.HttpClient;
+using TeamMonitoring.Common.Middleware;
 using TeamMonitoring.Common.Queues;
 using TeamMonitoring.LocationReporter.API.Models;
 using TeamMonitoring.LocationReporter.API.Services;
@@ -53,8 +55,11 @@ namespace TeamMonitoring.LocationReporter.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+
+            app.UseExceptionHandling(env, logger);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

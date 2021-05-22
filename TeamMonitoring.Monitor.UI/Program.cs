@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
+using TeamMonitoring.Common.Logging;
 
 namespace TeamMonitoring.Monitor.UI
 {
@@ -12,7 +14,8 @@ namespace TeamMonitoring.Monitor.UI
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+               .AddLogging(Assembly.GetExecutingAssembly().GetName().Name)
+               .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });

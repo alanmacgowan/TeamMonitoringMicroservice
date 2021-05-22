@@ -15,6 +15,8 @@ using HealthChecks.UI.Client;
 using System;
 using System.Net.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using TeamMonitoring.Common.Middleware;
+using Microsoft.Extensions.Logging;
 
 namespace TeamMonitoring.ProximityMonitor
 {
@@ -60,9 +62,11 @@ namespace TeamMonitoring.ProximityMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             app.UseCors("CorsPolicy");
+
+            app.UseExceptionHandling(env, logger);
 
             if (env.IsDevelopment())
             {

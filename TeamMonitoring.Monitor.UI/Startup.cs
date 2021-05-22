@@ -10,6 +10,8 @@ using HealthChecks.UI.Client;
 using System.Net.Http;
 using System;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Logging;
+using TeamMonitoring.Common.Middleware;
 
 namespace TeamMonitoring.Monitor.UI
 {
@@ -36,8 +38,11 @@ namespace TeamMonitoring.Monitor.UI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+
+            app.UseExceptionHandling(env, logger);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

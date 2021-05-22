@@ -13,6 +13,8 @@ using Prometheus;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using TeamMonitoring.Common.Middleware;
+using Microsoft.Extensions.Logging;
 
 namespace TeamMonitoring.TeamService.API
 {
@@ -55,8 +57,10 @@ namespace TeamMonitoring.TeamService.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+            app.UseExceptionHandling(env, logger);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

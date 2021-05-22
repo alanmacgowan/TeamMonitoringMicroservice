@@ -4,6 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using TeamMonitoring.TeamService.API.Persistence;
+using TeamMonitoring.Common.Logging;
+using System.Reflection;
 
 namespace TeamMonitoring.TeamService.API
 {
@@ -39,6 +41,7 @@ namespace TeamMonitoring.TeamService.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .AddLogging(Assembly.GetExecutingAssembly().GetName().Name)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
